@@ -8,20 +8,22 @@ tags:
 - intent
 - 记录
 ---
+###解释
 
 1、异步任务：使用子线程执行耗时操作，然后通过调用将结果返回给主线程；
 
 异步任务的作用和规则：
 
->1.主线程不能被阻塞，不能在主线程中执行耗时操作
+>####1.主线程不能被阻塞，不能在主线程中执行耗时操作
 >
->2.子线程不可以方法UI控件
+>####2.子线程不可以方法UI控件
 	
-实现方法
->是通过handle通信机制，将子线程的数据（结果）传给主线程，android中的线程的通信机制的类AsyncTask；
+###实现方法
+
+>####是通过handle通信机制，将子线程的数据（结果）传给主线程，android中的线程的通信机制的类AsyncTask；
 
 
-以下是一个利用子线程下载图片的例子：
+###例子说明：
 
 	
 1. protected Result doInBackground(Params... params)来实现子线程的调用；
@@ -78,11 +80,11 @@ tags:
 
 		}
 
-另外需要配置其网络访问权限；
+另外需要配置其网络访问权限
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 
-它的其他的覆写方法
+### 其他的覆写方法
 	
 	onPreExecute()：调用完UI线程后就立即执行，通常用来显示进程对象的初始值。
 	doInBackground(Params...)：

@@ -10,11 +10,11 @@ tags:
 
 通过回调函数设置list下拉框从网络读取json值进行设置
 
-基本类：
+###基本类：
 
 ![android_spinner01](http://i.imgur.com/zD9dPly.png)
 
-FeedCategory：实体类
+###FeedCategory：实体类
 
 	public class FeedCategory {
 		private int id ;
@@ -37,79 +37,80 @@ FeedCategory：实体类
 		}
 	}
 
-工具类：
+###工具类
 
 - CategroyTask：解析JSON后返回List<FeedCategory>集合，其中使用回调接口CallBack来将数据返回给主线程；
 
-		public class CategroyTask extends AsyncTask<String, Void, List<FeedCategory>> {
-			private CallBack callback;
-			public CategroyTask(CallBack callback){
-				this.callback=callback;
-			}
-			@Override
-			protected List<FeedCategory> doInBackground(String... params) {
-				try{
-					byte[] bytes=Request.get(params[0]);
-					if(bytes!=null){
-						String json=new String(bytes,"utf-8");
-						JSONArray jsonArray=new JSONObject(json).getJSONObject("paramz").getJSONArray("columns");
-						List<FeedCategory> list=new ArrayList<FeedCategory>();
-						for(int i=0;i<jsonArray.length();i++){
-							FeedCategory fc=new FeedCategory();
-							fc.setId( jsonArray.getJSONObject(i).getInt("id") );
-							fc.setName( jsonArray.getJSONObject(i).getString("name") );
-							list.add(fc);
-						}
-						return list;
-					}else{
-						
+	public class CategroyTask extends AsyncTask<String, Void, List<FeedCategory>> {
+		private CallBack callback;
+		public CategroyTask(CallBack callback){
+			this.callback=callback;
+		}
+		@Override
+		protected List<FeedCategory> doInBackground(String... params) {
+			try{
+				byte[] bytes=Request.get(params[0]);
+				if(bytes!=null){
+					String json=new String(bytes,"utf-8");
+					JSONArray jsonArray=new JSONObject(json).getJSONObject("paramz").getJSONArray("columns");
+					List<FeedCategory> list=new ArrayList<FeedCategory>();
+					for(int i=0;i<jsonArray.length();i++){
+						FeedCategory fc=new FeedCategory();
+						fc.setId( jsonArray.getJSONObject(i).getInt("id") );
+						fc.setName( jsonArray.getJSONObject(i).getString("name") );
+						list.add(fc);
 					}
-				}catch(Exception e){
+					return list;
+				}else{
 					
 				}
-				return null;
+			}catch(Exception e){
+				
 			}
-			
-			@Override
-			protected void onPostExecute(List<FeedCategory> result) {
-				if(result!=null){
-					callback.response(result);
-				}
-			}
-			public interface CallBack{
-				 public void response(List<FeedCategory> list);
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(List<FeedCategory> result) {
+			if(result!=null){
+				callback.response(result);
 			}
 		}
+		public interface CallBack{
+			 public void response(List<FeedCategory> list);
+		}
+	}
 
 - Request: 从网络读取json格式的数据对象
 
-		public class Request {
-			//从一个URL地址取得对象流；
-			public static byte[] get(String url) throws Exception{
-				HttpClient client =new DefaultHttpClient();
-				HttpResponse response=client.execute(new HttpGet(url));
-				if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
-					return EntityUtils.toByteArray(response.getEntity());
-				}
-				return null;
+	public class Request {
+		//从一个URL地址取得对象流；
+		public static byte[] get(String url) throws Exception{
+			HttpClient client =new DefaultHttpClient();
+			HttpResponse response=client.execute(new HttpGet(url));
+			if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+				return EntityUtils.toByteArray(response.getEntity());
 			}
+			return null;
 		}
+	}
 
 - Urls：存放连接地址常量；
 
-		public class Urls {
-			public static final String BASE_URL="http://litchiapi.jstv.com/";
-			
-			//分类
-			public static final String CATEGORY_URL=BASE_URL+"api/GetColumns?client=android&val=B52F2195EB64517ABC31C550BBFC5AEC";
-			
-			//列表信息
-			public static final String LIST_URL=BASE_URL+"api/GetFeeds?column=%d&PageSize=20&pageIndex=1&val=100511D3BE5301280E0992C73A9DEC41";
-		}
+	public class Urls {
+		public static final String BASE_URL="http://litchiapi.jstv.com/";
+		
+		//分类
+		public static final String CATEGORY_URL=BASE_URL+"api/GetColumns?client=android&val=B52F2195EB64517ABC31C550BBFC5AEC";
+		
+		//列表信息
+		public static final String LIST_URL=BASE_URL+"api/GetFeeds?column=%d&PageSize=20&pageIndex=1&val=100511D3BE5301280E0992C73A9DEC41";
+	}
 
 
+###主类
 
-主类：MainActivity：通过调用回调函数，直接取得链接对象的json后传给datas并且设置adapter
+MainActivity：通过调用回调函数，直接取得链接对象的json后传给datas并且设置adapter
 
 		//通过回调进行设置从网络取得的值
 		new CategroyTask(new CategroyTask.CallBack(){
@@ -129,11 +130,13 @@ FeedCategory：实体类
 ----------
 
 
-11/18日补充：
+##11/18日补充
 
 ![android_new02.PNG](http://i.imgur.com/TUIxXrK.png)
 
-FeedAdapter.java：继承BaseAdapter 用来构造Feed中的适配器，设置item中的各组件是属性值；
+###FeedAdapter.java
+
+继承BaseAdapter 用来构造Feed中的适配器，设置item中的各组件是属性值；
 
 	private Context context;
 	private List<Feed> feedlist;
@@ -194,7 +197,9 @@ FeedAdapter.java：继承BaseAdapter 用来构造Feed中的适配器，设置ite
 >LayoutInflater.from(context).inflate(int resource, ViewGroup root)：找到相应的布局文件实例化；resource:是布局文件ID，root：是Layout文件中的根视图；若是提供了root,root则是生成的层次结构的根视图，否则是整个视图；
 
 
-FeedTask.java：用来解析JSON中数据放入List<Feed>集合中；
+###FeedTask.java
+
+用来解析JSON中数据放入List<Feed>集合中；
 
 	public class FeedTask extends AsyncTask<String, Void, List<Feed>> {
 		private CallBack callback;
@@ -240,7 +245,9 @@ FeedTask.java：用来解析JSON中数据放入List<Feed>集合中；
 	}
 
 
-ImageTask.java：用来解析图片连接地址返回的Bitmap对象；
+### ImageTask.java
+
+用来解析图片连接地址返回的Bitmap对象；
 	
 	public class ImageTask extends AsyncTask<String, Void, Bitmap> {
 		private CallBack callback;

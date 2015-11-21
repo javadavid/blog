@@ -9,9 +9,12 @@ tags:
 - 记录
 ---
 
-adapter是用来实现控件的数据列表的一个接口；
+##解释
+
+>adapter是用来实现控件的数据列表的一个接口；
 
 常用的子类实现的List列表
+
 - ArrayAdapter：管理ListView列表
 - SpinnerAdapter：管理Spinner的控件列表
 - SimpleAdapter：管理像CheckBox、TextView、ImageView列表，会自动调用各自的绑定方法；
@@ -35,7 +38,7 @@ SimpleAdapter构造：
 	SimpleAdapter(Context context, List<? extends Map<String,?>> data, int resource, String[] from, int[] to) 
 
 
-代码实现：
+###代码实现：
 
 说明：通过声明数据对象类型，并且构造adapter（将item layout布局文件和数据键值对放进去），最后将adapter放到空间adapter中；
 

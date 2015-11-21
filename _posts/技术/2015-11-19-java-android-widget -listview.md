@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Android ListView 学习记录(1) "
+title:  "Android ListView 学习记录 - 列表滚动组件 "
 date: 2015/11/19 15:08:02 
 tags:
 - java 
@@ -9,47 +9,35 @@ tags:
 - 记录
 ---
 
-ListView：列表滚动组件
 
-继承关系：
-	
+### 继承关系
 	java.lang.Object
-	  	android.view.View
-	      android.view.ViewGroup
-	          android.widget.AdapterView<ListAdapter>
-	              android.widget.AbsListView
-	                  android.widget.ListView
+		android.view.View
+		  android.view.ViewGroup
+			  android.widget.AdapterView<ListAdapter>
+				  android.widget.AbsListView
+					  android.widget.ListView
 
+###监听事件
 
+- setOnScrollListener：监听滚动事件；
 
+- onScrollStateChanged：状态改变触发的事件,实现当滚动改变时触发事件（有ListView程序启动就触发）
 
-setOnScrollListener：监听滚动事件；
+- scrollState：当前滚动的状态
 
-其中：
+		OnScrollListener.SCROLL_STATE_TOUCH_SCROLL：当用户获得焦点滚动时候的状态
+		OnScrollListener.SCROLL_STATE_FLING：当滚动停止时候的状态
+		OnScrollListener.SCROLL_STATE_FLING：当快速滚动时候的状态
 
-onScrollStateChanged：实现当滚动改变时触发事件（有ListView程序启动就触发）
+- onScroll：在滚动中触发的事件；
 
-**参数：**
-
-scrollState：当前滚动的状态
-
-	OnScrollListener.SCROLL_STATE_TOUCH_SCROLL：当用户获得焦点滚动时候的状态
-	OnScrollListener.SCROLL_STATE_FLING：当滚动停止时候的状态
-	OnScrollListener.SCROLL_STATE_FLING：当快速滚动时候的状态
-
-
-
-
-onScroll：在滚动中触发的事件；
-
-**参数：**
->
 >view：当前的ListView；
-
+>
 >firstVisibleItem：程序启动时候的第一个View的ID；
-
+>
 >visibleItemCount：可见的View Item个数；
-
+>
 >totalItemCount：总共的Item个数；
 
 	lvId.setOnScrollListener(new OnScrollListener() {
@@ -77,6 +65,7 @@ onScroll：在滚动中触发的事件；
 		}
 	});
 
+###状态变化
 **程序启动：**首先会执行初始化 执行onScroll()
 
 ![android_listview_scroll01](http://i.imgur.com/rrRI8P0.png)
@@ -85,7 +74,9 @@ onScroll：在滚动中触发的事件；
 
 **程序滚动 到 停止的状态变化：**会调用 onScrollStateChanged() 执行程序的状态变化
 
->SCROLL_STATE_TOUCH_SCROLL(用户获得焦点滚动) - (SCROLL_STATE_FLING:若有快速滑动则有这个状态) - SCROLL_STATE_IDLE(停止滚动)
+	SCROLL_STATE_TOUCH_SCROLL(用户获得焦点滚动) 
+	(SCROLL_STATE_FLING:若有快速滑动则有这个状态) 
+	SCROLL_STATE_IDLE(停止滚动)
 
 ![android_listview_scroll02.PNG](http://i.imgur.com/f9ASX3Y.png)
 
@@ -93,17 +84,19 @@ onScroll：在滚动中触发的事件；
 
 所以可以通过一下条件判断 ListView 是否滚动到底部并且停止了。一般用于加载数据；
 
-	firstVisibleItem+visibleItemCount==totalItemCount
-	OnScrollListener.SCROLL_STATE_FLING
-
+- firstVisibleItem+visibleItemCount==totalItemCount
+- OnScrollListener.SCROLL_STATE_FLING
 
 ----------
 
-关于上一节中的新闻列表中添加滚动事件的例子；修改
+###修改例子
+
+关于上一节中的新闻列表中添加滚动事件的例子
+
 ![android_new03.PNG](http://i.imgur.com/bNyYm94.png)
 
 
-添加相关的滚动事件：
+####添加相关的滚动事件
 
 >当数据没有正在加载或滚动到底部，并且处于停止状态时候；
 
@@ -224,7 +217,7 @@ onScroll：在滚动中触发的事件；
 
 
 
-改变载入进度的显示方式：
+####改变载入进度的显示方式
 
 main布局文件：
 

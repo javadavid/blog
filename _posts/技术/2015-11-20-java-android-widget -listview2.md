@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Android ListView 学习记录(2) - ViewHolder "
+title:  "Android BaseAdapter 学习记录  - ViewHolder "
 date: 2015/11/20 9:22:13 
 tags:
 - java 
@@ -10,11 +10,16 @@ tags:
 - 记录
 ---
 
-ListView中的Adapter需要覆写的方法；
+###解释
+>####简单的适配器，用来添加listView的各种子控件
+
+主要实现方法
 
 	public View getView(int position, View convertView, ViewGroup parent)
 
->convertView:是指的是保存的 ListView中 划出 界面的对象，当界面滑动时候总是会保存上一个的划出的 Item View对象；
+###convertView
+
+>####是指的是保存的 ListView中 划出 界面的对象，当界面滑动时候总是会保存上一个的划出的 Item View对象；
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -36,12 +41,11 @@ ListView中的Adapter需要覆写的方法；
 ![android_listview_viewholder01](http://i.imgur.com/HUNRl2m.png)
 
 
-关于ViewHolder：
->首先定义一个ViewHolder子类来封装itemView中的对象，通过查看convertView是否是空，来临时保存子控件中的数据；来达到使创建子控件减少的效果（每次只创建界面显示的itemView），从而使程序不易产生垃圾对象
+###ViewHolder
+>####首先定义一个ViewHolder子类来封装itemView中的对象，通过查看convertView是否是空，来临时保存子控件中的数据；来达到使创建子控件减少的效果（每次只创建界面显示的itemView），从而使程序不易产生垃圾对象
 
-关于setTag(Object)和getTag()方法：
->是用来保存和取得对象中的一个临时的数据，（相当于一个对象中的子对象，内部类的关系更加容易理解）
-
+###setTag(Object)和getTag()方法
+>####是用来保存和取得对象中的一个临时的数据，（相当于一个对象中的子对象，内部类的关系更加容易理解）
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
