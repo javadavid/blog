@@ -58,9 +58,24 @@ $(document).ready(function() {
 
   });
 
-  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
-  
-  //contentEffects();
+  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000,dataType:"html"});
+  $(document).on("pjax:end", function() {
+    if($("body").find('.container').width() < 992)
+      $('#nav_btn').click();
+    $('.aside3').scrollTop(0);
+    contentEffects();
+  });
+  $('body').on('click', '.show-commend', function(){
+    var ds_loaded = false;
+    window.disqus_shortname = $('.show-commend').attr('name');
+    $.ajax({
+      type: "GET",
+      url: "http://" + disqus_shortname + ".disqus.com/embed.js",
+      dataType: "script",
+      cache: true
+    });
+  });
+  contentEffects();
 });
 function contentEffects(){
   //remove the asidebar
