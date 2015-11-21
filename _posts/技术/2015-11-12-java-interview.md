@@ -2,6 +2,8 @@
 layout: post
 title:  "java科大讯飞面试"
 date:   2015/11/12 9:05:39 
+categories：
+- 技术
 tags:
 - java 
 - 面试

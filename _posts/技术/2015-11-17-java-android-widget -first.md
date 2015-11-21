@@ -2,6 +2,8 @@
 layout: post
 title:  "Android adapter适配器 学习记录 - 简单理解"
 date: 2015/11/17 8:52:17  
+categories：
+- 技术
 tags:
 - java 
 - android

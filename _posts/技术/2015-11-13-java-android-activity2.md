@@ -2,6 +2,8 @@
 layout: post
 title:  "Android activity 学习记录(2) - 生命周期"
 date:   2015/11/13 13:38:01 
+categories：
+- 技术
 tags:
 - java 
 - android

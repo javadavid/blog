@@ -2,6 +2,8 @@
 layout: post
 title:  "Android BaseAdapter 学习记录  - ViewHolder "
 date: 2015/11/20 9:22:13 
+categories：
+- 技术
 tags:
 - java 
 - android

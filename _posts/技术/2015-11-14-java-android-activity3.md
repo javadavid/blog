@@ -2,6 +2,8 @@
 layout: post
 title:  "Android activity 学习记录(3) - 任务和退回栈"
 date:   2015/11/14 15:07:34 
+categories：
+- 技术
 tags:
 - java 
 - android

@@ -2,6 +2,8 @@
 layout: post
 title:  "java中线程的理解"
 date:   2015.11.10 23:13:04 
+categories：
+- 技术
 tags:
 - java 
 - thread

@@ -2,6 +2,8 @@
 layout: post
 title:  "Android ListView 学习记录 - 列表滚动组件 "
 date: 2015/11/19 15:08:02 
+categories：
+- 技术
 tags:
 - java 
 - android
