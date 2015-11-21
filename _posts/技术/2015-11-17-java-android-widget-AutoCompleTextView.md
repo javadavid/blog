@@ -2,7 +2,7 @@
 layout: post
 title:  "Android AutoCompleteTextView 学习记录"
 date: 2015/11/17 10:17:44  
-categories：
+categories:
 - 技术
 tags:
 - java 

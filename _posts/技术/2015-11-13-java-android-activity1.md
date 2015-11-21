@@ -2,7 +2,7 @@
 layout: post
 title:  "Android activity 学习记录(1) - 基本传值"
 date:   2015/11/13 10:38:30 
-categories：
+categories:
 - 技术
 tags:
 - java 

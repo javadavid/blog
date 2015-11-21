@@ -2,7 +2,7 @@
 layout: post
 title:  "Android Intent 学习记录 - 7大属性"
 date:   2015/11/16 10:40:00 
-categories：
+categories:
 - 技术
 tags:
 - java 

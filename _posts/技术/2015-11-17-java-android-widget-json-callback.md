@@ -2,7 +2,7 @@
 layout: post
 title:  "Android 学习记录 - 网络读取json 回调设置Spinner adapter"
 date: 2015/11/17 17:05:56 
-categories：
+categories:
 - 技术
 tags:
 - java 

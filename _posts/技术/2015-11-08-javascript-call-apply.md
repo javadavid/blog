@@ -2,7 +2,7 @@
 layout: post
 title:  "关于js中 apply call 理解"
 date:   2015.11.08 15:13:04 
-categories：
+categories:
 - 技术
 tags:
 - javascript 

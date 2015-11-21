@@ -2,7 +2,7 @@
 layout: post
 title:  "Android asyncTask 学习记录 - 异步任务"
 date: 2015/11/16 15:45:22 
-categories：
+categories:
 - 技术
 tags:
 - java 
