@@ -58,7 +58,7 @@ $(document).ready(function() {
 
   });
 
-  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000,dataType:"html"});
+  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
   $(document).on("pjax:end", function() {
     if($("body").find('.container').width() < 992)
       $('#nav_btn').click();

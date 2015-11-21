@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 自我介绍
-permalink: /about/
+permalink: /-about/
 tags:
 - 自我介绍
 - 中文 

@@ -1,10 +1,10 @@
 permalink: /:year/:month/:day/:title.html
-paginate: 10
+# paginate: 10
 # markdown: redcarpet
 
 # 作者信息
 author: 
-  name: Anya Lin
+  name: kuma's blog
   email: 276602624@qq.com
   # link: http://painterlin.com
   # weibo: http://weibo.com/orangeissweet
@@ -28,8 +28,8 @@ favicon: /public/img/favicon.png
 #   url: painterlin.com
 
 # disqus 设置
-disqus:
-  shortname: painterlin
+# disqus:
+#   shortname: painterlin
 
 # 主题设置，自动激活某个标签
 active: 读书
