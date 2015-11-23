@@ -65,13 +65,12 @@ $(document).ready(function() {
     $('.aside3').scrollTop(0);
     contentEffects();
   });
-  $('body').on('click', '.show-commend', function(){
-    var ds_loaded = false;
-    window.disqus_shortname = $('.show-commend').attr('name');
+  $('body').on('click', function(){
     $.ajax({
+	  data:{short_name:"{{ duoshuo-short_name }}",sync:true}
       type: "GET",
-      url: "http://" + disqus_shortname + ".disqus.com/embed.js",
-      dataType: "script",
+      url: "http://static.duoshuo.com/embed.js",
+      dataType: "html",
       cache: true
     });
   });
