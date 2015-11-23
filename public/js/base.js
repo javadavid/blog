@@ -65,15 +65,17 @@ $(document).ready(function() {
     $('.aside3').scrollTop(0);
     contentEffects();
   });
-  $('body').on('click', function(){
-    $.ajax({
-	  data:{short_name:"{{ duoshuo-short_name }}",sync:true}
-      type: "GET",
-      url: "http://static.duoshuo.com/embed.js",
-      dataType: "html",
-      cache: true
-    });
-  });
+/*  
+$('body').on('click', function(){
+	$.ajax({
+		  data:{short_name:"{{ duoshuo-short_name }}",sync:true},
+		  type: "GET",
+		  url: "http://static.duoshuo.com/embed.js",
+		  dataType: "html",
+		  cache: true
+	});
+});
+*/
   contentEffects();
 });
 function contentEffects(){
