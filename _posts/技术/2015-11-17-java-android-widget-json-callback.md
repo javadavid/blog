@@ -193,9 +193,9 @@ MainActivity：通过调用回调函数，直接取得链接对象的json后传�
 说明：
 
 >getView(int position, View convertView, ViewGroup parent): 用来取得List对象中的ItemView，并且将值放到其中的Item对象中；
-
+>
 >executeOnExecutor(Executor exec, String... params)：用线程池中的数据来下载图片；
-
+>
 >LayoutInflater.from(context).inflate(int resource, ViewGroup root)：找到相应的布局文件实例化；resource:是布局文件ID，root：是Layout文件中的根视图；若是提供了root,root则是生成的层次结构的根视图，否则是整个视图；
 
 

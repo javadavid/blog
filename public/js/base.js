@@ -64,20 +64,29 @@ $(document).ready(function() {
       $('#nav_btn').click();
     $('.aside3').scrollTop(0);
     contentEffects();
+
+	pajx_loadDuodsuo();
   });
-/*  
-$('body').on('click', function(){
-	$.ajax({
-		  data:{short_name:"{{ duoshuo-short_name }}",sync:true},
-		  type: "GET",
-		  url: "http://static.duoshuo.com/embed.js",
-		  dataType: "html",
-		  cache: true
-	});
-});
-*/
+
+
   contentEffects();
 });
+
+// 动态加载多说评论框的方法（pjax使用后会失效），需要回调重新绑定。
+function pajx_loadDuodsuo(){ 
+	var dus=$(".ds-thread"); 
+	if($(dus).length==1){
+		 var el = document.createElement('div');
+		 el.setAttribute('data-thread-key',$(dus).attr("data-thread-key"));//必选参数
+		 el.setAttribute('data-url',$(dus).attr("data-url"));
+		 el.setAttribute('data-title',$(dus).attr("data-title"));
+		 DUOSHUO.EmbedThread(el);
+		 $(dus).replaceWith(el);
+	} 
+}
+
+
+//渲染发表的帖子
 function contentEffects(){
   //remove the asidebar
   $('.row-offcanvas').removeClass('active');
@@ -90,7 +99,7 @@ function contentEffects(){
     }); 
     $("pre").addClass("prettyprint");
     prettyPrint(); 
-    $('#content img').addClass('img-thumbnail').parent('p').addClass('center');
+    $('#content img').addClass('img-thumbnail').parent('p')//.addClass('center');
     $('#content_btn').show();
   }else{
     $('#content_btn').hide();
