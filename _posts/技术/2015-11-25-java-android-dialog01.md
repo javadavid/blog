@@ -140,6 +140,20 @@ tags:
 		}
 	}
 
+strings.xml:配置可以用来配置Color、字体的列表
+	
+	<resources>
+	    <string name="app_name">AlertDialog01</string>
+	    <string name="action_settings">Settings</string>
+	    <string name="hello_world">Hello world!</string>
+		<string-array name="fontSize">
+		    <item>小号</item>
+		    <item>中号</item>
+		    <item>大号</item>
+		    <item>特大号</item>
+		</string-array>
+	</resources>
+
 运行截图：
 
 ![android_dialog01.PNG](http://i.imgur.com/BPZFbaB.png)
@@ -159,7 +173,8 @@ tags:
 		- listener：是监听的事件，需要覆写onClick(DialogInterface dialog, int which)方法（两个参数分别是选择的dialog对象和选择dialog的Item的position）
 2. 使用builder.create()实例化Dialog 和 dialog.show()来显示对话框；
 3. 其中关闭隐藏对话框的方法dialog.dismiss();
-4. 在AlertDialog.Builder需要传递的是this对象的Context，具体可以参看以下
+4. getResources()专门取得strings.xml中的资源信息，.getStringArray(int resid)：可以从资源信息取得ID的对象值
+5. 在AlertDialog.Builder需要传递的是this对象的Context，具体可以参看以下
 
 
 ###getApplicationContext和this对象的比较
