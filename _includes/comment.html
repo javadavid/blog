@@ -1,4 +1,8 @@
+{% assign data-thread-key = '/' %}
+{% if page.id != null%}
+  {% assign  data-thread-key = page.id %}
+{% endif %}
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="{{ page.id }}" data-title="{{ page.title }}" data-url="{{ page.url|prepend:site.url}}"></div>
+<div class="ds-thread" data-thread-key="{{ data-thread-key }}" data-title="{{ page.title }}" data-url="{{ page.url|prepend:site.url}}"></div>
 <!-- 多说评论框 end -->
 

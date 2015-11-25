@@ -159,4 +159,5 @@ BaseAdapter的重构；
 	}
 
 运行结果和原来的ListView一样:
+
 ![android_adapter02.PNG](http://i.imgur.com/3xV6vgx.png)
