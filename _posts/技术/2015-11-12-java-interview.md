@@ -125,7 +125,7 @@ tags:
 参考[CSDN](http://my.oschina.net/wlb/blog/282958)
 
 ###**5、对于线程的理解** 
-请参考我的[日志](/blog/2015/11/10/java-thread/)
+请参考我的[日志](/blog/2015/11/10/java-thread.html)
 
 ###**6、JQuery中的显示和隐藏元素是什么**
 
