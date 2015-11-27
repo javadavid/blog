@@ -72,7 +72,8 @@ HelloWorldController类
 	}
 
 如图显示
-![j2ee_spring_mvc_01.PNG](http://i.imgur.com/w8NzU8T.png)
+
+![j2ee_spring_mvc_01.PNG]({{site.baseurl}}/public/img/j2ee_spring_mvc_01.png)
 
 
 
@@ -217,7 +218,7 @@ SpringController.java：注释声明控制层
 **注意：**return "/index":是访问路径的映射的JSP文件;
 
 实现效果：
-![j2ee_spring_mvc_02](http://i.imgur.com/PQW9uCA.png)
+![j2ee_spring_mvc_02]({{site.baseurl}}/public/img/j2ee_spring_mvc_02.png)
 
 
 参考博客  [地址](http://blog.csdn.net/lishehe/article/details/38355757)

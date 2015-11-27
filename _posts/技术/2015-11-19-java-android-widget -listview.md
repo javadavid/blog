@@ -70,7 +70,7 @@ tags:
 ###状态变化
 **程序启动：**首先会执行初始化 执行onScroll()
 
-![android_listview_scroll01](http://i.imgur.com/rrRI8P0.png)
+![android_listview_scroll01]({{site.baseurl}}/public/img/android_listview_scroll01.png)
 
 
 
@@ -80,7 +80,7 @@ tags:
 	(SCROLL_STATE_FLING:若有快速滑动则有这个状态) 
 	SCROLL_STATE_IDLE(停止滚动)
 
-![android_listview_scroll02.PNG](http://i.imgur.com/f9ASX3Y.png)
+![android_listview_scroll02.PNG]({{site.baseurl}}/public/img/android_listview_scroll02.png)
 
 
 
@@ -95,7 +95,7 @@ tags:
 
 关于上一节中的新闻列表中添加滚动事件的例子
 
-![android_new03.PNG](http://i.imgur.com/bNyYm94.png)
+![android_new03.PNG]({{site.baseurl}}/public/img/android_new03.png)
 
 
 ####添加相关的滚动事件
@@ -215,7 +215,7 @@ tags:
 
 运行如下图：代码项目	ListView_News
 
-![android_new04](http://i.imgur.com/W0M68hB.png)
+![android_new04]({{site.baseurl}}/public/img/android_new04.png)
 
 
 
@@ -398,5 +398,5 @@ main布局文件：
 	}
 
 效果截图：
-![android_new05.PNG](http://i.imgur.com/G209aXb.png)
+![android_new05.PNG]({{site.baseurl}}/public/img/android_new05.png)
  

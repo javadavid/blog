@@ -102,7 +102,7 @@ MainActivity：
 
 - 主要是通过AlertDialog.Builder.setView(View view)将控件设置到其中；
 
-![android_dialog04.PNG](http://i.imgur.com/3GR1etF.png)
+![android_dialog04.PNG]({{site.baseurl}}/public/img/android_dialog04.png)
 
 ###进度对话框(ProcessDialog)
 
@@ -184,4 +184,4 @@ MainActivity：
 
 截图：
 
-![android_dialog05.PNG](http://i.imgur.com/OT68GcT.png)
+![android_dialog05.PNG]({{site.baseurl}}/public/img/android_dialog05.png)

@@ -39,7 +39,7 @@ AndroidManifest.xml:配置需要配置权限
 
 任务中Activity跳转几次后显示结构 ( standard模式：可以创建多个相同的activity,也可以在不同task中 )
 
-![android_activity9.PNG](http://i.imgur.com/D2soHKC.png)
+![android_activity9.PNG]({{site.baseurl}}/public/img/android_activity9.png)
 
 结果可以看出：
 	
@@ -108,7 +108,7 @@ java class 需要通过隐式声明Intent的方法启动任务
 
 关于四种模式的简图我直接放上了。 可能理解还有些错误或者不深刻，慢慢消化
 
-![android_activity10](http://i.imgur.com/TMo39Mi.png)
+![android_activity10]({{site.baseurl}}/public/img/android_activity10.png)
 
 另外可以参考这篇 [帖子](http://blog.csdn.net/moreevan/article/details/6788048 "CSDN")；讲解的很详细了
 

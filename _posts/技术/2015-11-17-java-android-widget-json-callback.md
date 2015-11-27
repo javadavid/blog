@@ -14,7 +14,7 @@ tags:
 
 ###基本类：
 
-![android_spinner01](http://i.imgur.com/zD9dPly.png)
+![android_spinner01]({{site.baseurl}}/public/img/android_spinner01.png)
 
 ###FeedCategory：实体类
 
@@ -125,7 +125,7 @@ MainActivity：通过调用回调函数，直接取得链接对象的json后传�
 
 运行截图：
 
-![android_spinner02](http://i.imgur.com/F0ALPei.png)
+![android_spinner02]({{site.baseurl}}/public/img/android_spinner02.png)
 
 
 
@@ -134,7 +134,7 @@ MainActivity：通过调用回调函数，直接取得链接对象的json后传�
 
 ##11/18日补充
 
-![android_new02.PNG](http://i.imgur.com/TUIxXrK.png)
+![android_new02.PNG]({{site.baseurl}}/public/img/android_new02.png)
 
 ###FeedAdapter.java
 
@@ -284,4 +284,4 @@ MainActivity：通过调用回调函数，直接取得链接对象的json后传�
 
 运行截图：
 
-![android_new03.PNG](http://i.imgur.com/bNyYm94.png)
+![android_new03.PNG]({{site.baseurl}}/public/img/android_new03.png)

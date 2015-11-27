@@ -64,7 +64,7 @@ tags:
 		
 它的执行顺序和结果如下：
 
-![android_autocompleteTextView01.PNG](http://i.imgur.com/hO3q3Mw.png)
+![android_autocompleteTextView01.PNG]({{site.baseurl}}/public/img/android_autocompleteTextView01.png)
 
 
 在layout XML配置文件中
@@ -152,4 +152,4 @@ ArrayAdapter是用来保存ListView组件中的item数据的组件
 
 运行截图：
 
-![android_autocompleteTextView02.PNG](http://i.imgur.com/MxN2EU0.png)
+![android_autocompleteTextView02.PNG]({{site.baseurl}}/public/img/android_autocompleteTextView02.png)

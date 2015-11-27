@@ -27,38 +27,38 @@ tags:
 
 	onCreate -- onStart -- onResume
 	
-	![android_activity1](/public/img/android_activity1.png)
+	![android_activity1]({{site.baseurl}}/public/img/android_activity1.png)
 
 #### 2、当点击Home按键时候；<b style='color:red'>HOME也是一个Activity(Main Activity)</b>
 	
 	onPause -- HOME:( onCrate -- onStart -- onResume ) -- onStop
-![android_activity2](http://i.imgur.com/td4IPmh.png)
+![android_activity2]({{site.baseurl}}/public/img/android_activity2.png)
 
 #### 3、当点击任务调度器 调出任务时 ( 从HOME到原始Activity界面 )
 	
 	HOME:onPause -- A:(onRestart -- onStart -- onResume) -- HOME:onStop -- onDestroy 
-![android_activity3](http://i.imgur.com/2JiZXot.png)
+![android_activity3]({{site.baseurl}}/public/img/android_activity3.png)
 
 ----------
 
 #### 4、Activity跳转 MainActivity --> BActivty 如下图所示 （A页面被B页面完全覆盖）；
 	
-![android_activity4](http://i.imgur.com/p8PTGC2.png)
+![android_activity4]({{site.baseurl}}/public/img/android_activity4.png)
 
 
 #### 5、当B页面返回按键时候 activity执行过程；
-![android_activity5](http://i.imgur.com/cE6XfVy.png)
+![android_activity5]({{site.baseurl}}/public/img/android_activity5.png)
 
 ----------
 
 ####以上情况BActivity是对话框按钮时候的启动、跳转、返回
-![android_activity6](http://i.imgur.com/Rcpzlvq.png)
+![android_activity6]({{site.baseurl}}/public/img/android_activity6.png)
 
 跳转
-![android_activity7](http://i.imgur.com/y0GX0Hs.png)
+![android_activity7]({{site.baseurl}}/public/img/android_activity7.png)
 
 返回
-![android_activity8](http://i.imgur.com/0KX28WO.png)
+![android_activity8]({{site.baseurl}}/public/img/android_activity8.png)
 
 
 	- 当A跳转到B时候，A如果被B覆盖：则A会执行onStop方法；否则不会执行

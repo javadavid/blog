@@ -40,7 +40,7 @@ tags:
 	}
 
 运行结果：可以看出每次程序只会创建界面显示的几个子控件对象
-![android_listview_viewholder01](http://i.imgur.com/HUNRl2m.png)
+![android_listview_viewholder01]({{site.baseurl}}/public/img/android_listview_viewholder01.png)
 
 
 ###ViewHolder

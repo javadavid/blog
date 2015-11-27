@@ -109,4 +109,4 @@ SimpleAdapter构造：
 
 实现效果如下图显示
 
-![android_adapter01](http://i.imgur.com/r2SyxVx.png)
+![android_adapter01]({{site.baseurl}}/public/img/android_adapter01.png)

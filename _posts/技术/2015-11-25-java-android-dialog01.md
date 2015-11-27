@@ -156,9 +156,9 @@ strings.xml:配置可以用来配置Color、字体的列表
 
 运行截图：
 
-![android_dialog01.PNG](http://i.imgur.com/BPZFbaB.png)
-![android_dialog02.PNG](http://i.imgur.com/Sy5E0lW.png)
-![android_dialog03.PNG](http://i.imgur.com/v9Ss8JB.png)
+![android_dialog01.PNG]({{site.baseurl}}/public/img/android_dialog01.png)
+![android_dialog02.PNG]({{site.baseurl}}/public/img/android_dialog02.png)
+![android_dialog03.PNG]({{site.baseurl}}/public/img/android_dialog03.png)
 
 
 ###代码说明(个人理解)
