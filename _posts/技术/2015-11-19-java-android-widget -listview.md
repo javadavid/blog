@@ -5,9 +5,7 @@ date: 2015/11/19 15:08:02
 categories:
 - 技术
 tags:
-- java 
 - android
-- ListView
 - 记录
 ---
 

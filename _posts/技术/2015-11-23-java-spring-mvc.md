@@ -7,7 +7,6 @@ categories:
 tags:
 - java 
 - Spring
-- MVC
 ---
 
 ###首先Struts和Spring的MVC比较

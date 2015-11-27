@@ -5,9 +5,7 @@ date: 2015/11/17 10:17:44
 categories:
 - 技术
 tags:
-- java 
 - android
-- widget
 - 记录
 ---
 

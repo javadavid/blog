@@ -5,7 +5,6 @@ date: 2015/11/27 11:18:12
 categories:
 - 技术
 tags:
-- java 
 - android
 - 记录
 ---

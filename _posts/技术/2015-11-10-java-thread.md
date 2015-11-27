@@ -6,7 +6,6 @@ categories:
 - 技术
 tags:
 - java 
-- thread
 ---
 ### 线程创建的方式
 

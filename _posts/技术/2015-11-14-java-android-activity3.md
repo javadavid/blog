@@ -5,9 +5,7 @@ date:   2015/11/14 15:07:34
 categories:
 - 技术
 tags:
-- java 
 - android
-- activity
 - 记录
 ---
 任务(task)和退回栈：

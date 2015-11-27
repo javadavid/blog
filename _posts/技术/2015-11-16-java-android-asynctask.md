@@ -5,9 +5,7 @@ date: 2015/11/16 15:45:22
 categories:
 - 技术
 tags:
-- java 
 - android
-- intent
 - 记录
 ---
 ###解释

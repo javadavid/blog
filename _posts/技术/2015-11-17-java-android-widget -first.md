@@ -5,9 +5,7 @@ date: 2015/11/17 8:52:17
 categories:
 - 技术
 tags:
-- java 
 - android
-- adapter
 - 记录
 ---
 

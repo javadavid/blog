@@ -5,10 +5,7 @@ date: 2015/11/20 9:22:13
 categories:
 - 技术
 tags:
-- java 
 - android
-- ListView
-- ViewHolder
 - 记录
 ---
 
