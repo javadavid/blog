@@ -124,3 +124,18 @@ blockquote p {
   width: 100%;
   margin-bottom: 40px;
 }
+
+
+
+/*侧边栏样式 溢出现象修改*/
+.list-group {
+	margin:20px 0;
+}
+
+.aside2 {
+	margin:auto;
+}
+
+.panel-group{
+	margin:20px 0 20px 35px;
+}
