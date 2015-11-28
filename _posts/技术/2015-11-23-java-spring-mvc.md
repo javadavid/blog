@@ -211,8 +211,8 @@ SpringController.java：注释声明控制层
 		}
 	}
 
-@Controller:声明控制层
-@RequestMapping:声明用户URL地址映射路径，可以用在方法和类上面
+- @Controller:声明控制层
+- @RequestMapping:声明用户URL地址映射路径，可以用在方法和类上面
 
 **注意：**return "/index":是访问路径的映射的JSP文件;
 
