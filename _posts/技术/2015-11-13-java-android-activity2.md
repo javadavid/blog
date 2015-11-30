@@ -25,16 +25,18 @@ tags:
 
 	onCreate -- onStart -- onResume
 	
-	![android_activity1]({{site.baseurl}}/public/img/android_activity1.png)
+![android_activity1]({{site.baseurl}}/public/img/android_activity1.png)
 
 #### 2、当点击Home按键时候；<b style='color:red'>HOME也是一个Activity(Main Activity)</b>
 	
 	onPause -- HOME:( onCrate -- onStart -- onResume ) -- onStop
+
 ![android_activity2]({{site.baseurl}}/public/img/android_activity2.png)
 
 #### 3、当点击任务调度器 调出任务时 ( 从HOME到原始Activity界面 )
 	
 	HOME:onPause -- A:(onRestart -- onStart -- onResume) -- HOME:onStop -- onDestroy 
+
 ![android_activity3]({{site.baseurl}}/public/img/android_activity3.png)
 
 ----------
