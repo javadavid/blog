@@ -5,7 +5,7 @@ date:   2015.11.08 15:13:04
 categories:
 - 技术
 tags:
-- javascript 
+- Javascript
 ---
 ### 关于apply和call的应用；
 作用：

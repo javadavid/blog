@@ -5,7 +5,7 @@ date:   2015.11.10 23:13:04
 categories:
 - 技术
 tags:
-- java 
+- Java
 ---
 ### 线程创建的方式
 
