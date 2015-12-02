@@ -6,7 +6,6 @@ categories:
 - 技术
 tags:
 - Android
-- 记录
 ---
 
 ### Activity正常执行的生命周期

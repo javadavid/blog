@@ -6,7 +6,6 @@ categories:
 - 技术
 tags:
 - Android
-- 记录
 ---
 
 通过回调函数设置list下拉框从网络读取json值进行设置

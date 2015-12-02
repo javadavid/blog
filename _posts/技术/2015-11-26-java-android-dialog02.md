@@ -6,7 +6,6 @@ categories:
 - 技术
 tags:
 - Android
-- 记录
 ---
 
 ###自定义对话框基本用法

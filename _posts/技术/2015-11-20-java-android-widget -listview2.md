@@ -6,7 +6,6 @@ categories:
 - 技术
 tags:
 - Android
-- 记录
 ---
 
 ###解释

@@ -6,7 +6,6 @@ categories:
 - 技术
 tags:
 - Android
-- 记录
 ---
 任务(task)和退回栈：
 
