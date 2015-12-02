@@ -37,10 +37,10 @@ HelloFragment：
 		}
 2. 通过取得布局文件返回
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_edit, null);
-	}
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			return inflater.inflate(R.layout.fragment_edit, null);
+		}
 
 MainActivity 取得控件
 
