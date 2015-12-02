@@ -39,7 +39,7 @@ HelloFragment：
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.from(getActivity().getApplicationContext()).inflate(R.layout.fragment_edit, null);
+		return inflater.inflate(R.layout.fragment_edit, null);
 	}
 
 MainActivity 取得控件
@@ -73,7 +73,7 @@ activity_main.xml： fragment节点下通过name关联相应的布局
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
-![android_fragment01]({{site.baseurl}}/public/img/html/android_fragment01.png)
+![android_fragment01]({{site.baseurl}}/public/img/android_fragment01.png)
 
 
 ##关于Fragment取得控件
@@ -128,6 +128,97 @@ MainActivity主布局中：
 		}
 	}
 
-![android_fragment02]({{site.baseurl}}/public/img/html/android_fragment02.png) 
+![android_fragment02]({{site.baseurl}}/public/img/android_fragment02.png) 
+
+##关于Fragment设置控件和传值
+
+在activity_main中：设置存放fragment的占位符
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+	    <Button
+	        android:id="@+id/btnId"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:onClick="showFragment"
+	        android:text="显示Fragment 并且取得值" />
+		<!-- 动态显示Fragment -->
+	    <FrameLayout 
+	        android:id="@+id/containerId"
+	        android:layout_width="200dp"
+	        android:background="#cc0"
+	        android:layout_height="match_parent"/>
+	</LinearLayout>
+
+MainActivity：
+
+- FragmentTransaction是一个对Fragment增删改查的一个抽象类
+- showFragment方法实例化FragmentTransaction并且取得bundle对象设置到LeftFragment
+- 通过取得LeftFragment对象，设置绑定Bundle对象传递的的参数
+- 通过replace(int containerViewId, Fragment fragment)或者add添加替换绑定fragment_left
+
+<nobr/>
+	
+	public class MainActivity extends Activity {
+		private FragmentManager fmanager;
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+			fmanager=getFragmentManager();	//获取FragmentManager对象
+		}
+		
+		public void showFragment(View view) {
+			FragmentTransaction ftransaction=fmanager.beginTransaction();
+			
+			LeftFragment lf=new LeftFragment();
+			Bundle bundle=new Bundle();
+			bundle.putLong("msg",System.currentTimeMillis());
+			lf.setArguments(bundle);	//将Bundle传入Fragment
+			
+			ftransaction.replace(R.id.containerId,lf);
+			
+			ftransaction.commit();
+		}
+	}
+
+fragment_left中：配置fragment模版
+
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    tools:context=".MainActivity" >
+	    <TextView
+	        android:id="@+id/txId"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:padding="10dp"/>
+	</RelativeLayout>
+
+LeftFragment：取得fragment模版，通过getArguments()取得MainActivity传过来的Bundle对象值
+
+	public class LeftFragment extends Fragment {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+			View v=inflater.inflate(R.layout.fragment_left, null);
+			TextView tv=(TextView) v.findViewById(R.id.txId);
+			tv.setTextColor(Color.rgb((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256)));
+			
+			Bundle args=getArguments();
+			
+			tv.setText(String.valueOf(args.getLong("msg")));		//取得传过来的Bundle值
+			return v;
+		}
+	}
+
+如图显示：点击按钮可替换中间的fragment，并且fragment可以取得传递过来的值
+
+![android_fragment03.png]({{site.baseurl}}/public/img/android_fragment03.png)
+
 
 

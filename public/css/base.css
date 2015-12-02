@@ -140,5 +140,5 @@ blockquote p {
 	margin:20px 0 20px 35px;
 }
 .img-thumbnail{
-	border:4px solid #ccc;
+	border:3px dashed #ccc;
 }
