@@ -187,10 +187,170 @@ Fragment的实例化都是一样的，参考上面代码
 ![android_fragment07.png]({{site.baseurl}}/public/img/android_fragment07.png)
 
 
-点击返回时候同样：会创建当前Fragment，删除前一个Fragment。
+点击返回时候同样：会创建当前Fragment，删除前一个Fragment。和LinkedList创建方式不一样。（上面一种是直接将Fragment保存在链表中）
 
 ![android_fragment08.png]({{site.baseurl}}/public/img/android_fragment08.png)
 
 
 ----
-未完待续。。。
+切换Fragment实例：
+
+android_fragment09.png
+
+activity_main.xml：设置横屏和竖屏（layout-land）的layout
+
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    tools:context=".MainActivity" >
+	    <!-- 静态设置Fragment -->
+	    <fragment
+	        android:id="@+id/fragmentId"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:name="com.example.fragment.LeftFragment" />
+	</RelativeLayout>
+
+	<!-- 竖屏Layout -->
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+    <fragment
+        android:id="@+id/fragmentId"
+        android:name="com.example.fragment.LeftFragment"
+        android:layout_width="200dp"
+        android:layout_height="fill_parent" />
+	<!-- 动态加载Fragment -->
+    <FrameLayout
+        android:id="@+id/fragmentView"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@id/fragmentId" />
+	</RelativeLayout>
+
+LeftFragment.java：
+
+- onAttach：开始和主activity交互时候，添加datas文件列表，设置adapter适配器
+- onCreateView：用来创建将列表放入adapter
+- onActivityCreated：用来添加ListView的item点击事件，通过动态加载bundle对象传过来的参数来决定是调用activity（ContentActivity）还是fragment（ContentFragment）。
+- getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE：判断是横屏还是竖屏的状态；
+
+<nobr/>
+
+	public class LeftFragment extends Fragment{
+		private List<String> datas=new ArrayList<String>();
+		private ArrayAdapter<String> adapter;
+		private ListView lvView;
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			datas.add("day1.txt");
+			datas.add("day2.txt");
+			datas.add("day3.txt");
+			datas.add("day4.txt");
+			datas.add("day5.txt");
+			datas.add("day6.txt");
+			adapter=new ArrayAdapter<String>(getActivity(),R.layout.day_activity,datas);
+		}
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+			lvView = (ListView) inflater.inflate(R.layout.fragment_left, null);
+			lvView.setAdapter(adapter);
+			return lvView;
+		}
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			lvView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapter, View view, int position,long id) {
+					Toast.makeText(getActivity(), datas.get(position),1).show();
+					Bundle args=new Bundle();
+					args.putString("day", datas.get(position));
+					if(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
+						ContentFragment cFragment=new ContentFragment();
+						cFragment.setArguments(args);
+						getFragmentManager().beginTransaction().replace(R.id.fragmentView, cFragment).addToBackStack(null).commit();
+					}else{
+						Intent intent=new Intent(getActivity(),ContentActivity.class);
+						intent.putExtras(args);
+						startActivity(intent);
+					}
+				}
+			});
+			super.onActivityCreated(savedInstanceState);
+		}
+	}
+
+ContentActivity.java：将取得的Bundle直接传递到ContentFragment中然后直接显示
+
+	public class ContentActivity extends Activity {
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_content);
+			ContentFragment cFragment=new ContentFragment();
+			cFragment.setArguments(getIntent().getExtras());
+			
+			getFragmentManager().beginTransaction().add(R.id.contentViewId, cFragment).commit();
+			
+		}
+	}
+	
+
+ContentFragment.java
+
+- onAttach：读取文件信息，放入全局变量textContent
+- onCreateView：创建Fragment视图
+- onActivityCreated：载入文本信息
+
+	public class ContentFragment extends Fragment{
+		private String textContent;
+		private TextView txView;
+		private String fileName;
+		
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			//读取文件
+			fileName=getArguments().getString("day");
+			InputStream input;
+			try {
+				input = getResources().getAssets().open(fileName);
+				BufferedReader bf=new BufferedReader(new InputStreamReader(input));
+				StringBuilder sb=new StringBuilder();
+				String s;
+				while ((s=bf.readLine())!=null) {
+					sb.append(s+"\n");
+				}
+				textContent=sb.toString();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+			View view= inflater.inflate(R.layout.fragment_content,null);
+			txView = (TextView) view.findViewById(R.id.contentTxView); 
+			return view;
+		}
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+			txView.setText(textContent);
+		}
+	}
+
+![android_fragment10.png]({{site.baseurl}}/public/img/android_fragment10.png)
+
+竖屏效果：
+
+![android_fragment11.png]({{site.baseurl}}/public/img/android_fragment11.png)
+
+
+由于我本机模拟器版本的问题，无法横屏，所以这个就自己使用真机运行吧，就不截图了。
+

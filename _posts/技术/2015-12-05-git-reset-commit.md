@@ -11,7 +11,7 @@ tags:
 
 先看看Git版本库的关系图：
 
-![1](http://images.cnblogs.com/cnblogs_com/craftor/201211/201211042015584140.gif)
+![201211042015584140.gif]({{site.baseurl}}/public/img/201211042015584140.gif)
 
 
 
