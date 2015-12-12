@@ -44,6 +44,6 @@ tags:
 			Toast.makeText(getApplicationContext(), "read ok", 1).show();
 		}
 
-![android_storage02.png]({{site.baseurl}}/public/img/android_storage02.png)
+	![android_storage02.png]({{site.baseurl}}/public/img/android_storage02.png)
 
 待更新。。。

@@ -172,7 +172,7 @@ ExitDialogFragment.java
 ![android_fragment14.png]({{site.baseurl}}/public/img/android_fragment14.png)
 
 
-###ListFragment：列表对话框碎片(Fragment09)
+###ListFragment：列表对话框碎片(Fragment10)
 
 实现ListFragment接口 内部已经创建了ListView列表，使用setListAdapter(adapter)来配置适配器，直接覆写onCreate方法后，基本上和普通的实现一样
 
