@@ -345,11 +345,7 @@ ContentFragment.java
 		}
 	}
 
-![android_fragment10.png]({{site.baseurl}}/public/img/android_fragment10.png)
-
-竖屏效果：
-
-![android_fragment11.png]({{site.baseurl}}/public/img/android_fragment11.png)
+![android_fragment10.png]({{site.baseurl}}/public/img/android_fragment10.png) ![android_fragment11.png]({{site.baseurl}}/public/img/android_fragment11.png)
 
 
 由于我本机模拟器版本的问题，无法横屏，所以这个就自己使用真机运行吧，就不截图了。

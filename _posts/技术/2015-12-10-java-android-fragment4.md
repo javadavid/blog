@@ -170,3 +170,71 @@ ExitDialogFragment.java
 
 
 ![android_fragment14.png]({{site.baseurl}}/public/img/android_fragment14.png)
+
+
+###ListFragment：列表对话框碎片(Fragment09)
+
+实现ListFragment接口 内部已经创建了ListView列表，使用setListAdapter(adapter)来配置适配器，直接覆写onCreate方法后，基本上和普通的实现一样
+
+PersonFragment.java：通过setListAdapter()：实现设置内置的ListView列表；
+
+	public class PersonFragment extends ListFragment {
+		private List<String> datas;
+		private ArrayAdapter<String> adapter;
+		
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			datas=new ArrayList<String>();
+			adapter=new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.item,datas);
+		}
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+			for(int i=0;i<50;i++) datas.add("Person -> "+i);
+			setListAdapter(adapter);
+		}
+		
+		@Override
+		public void onListItemClick(ListView l, View v, int position, long id){
+			Toast.makeText(getActivity(),datas.get(position),1).show();
+		}
+	}
+
+activity_main.xml：
+
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    tools:context=".MainActivity" >
+	    <Button
+	        android:id="@+id/btnId"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="showList"
+	        android:text="显示ListFragment列表" />
+	    <FrameLayout
+	        android:id="@+id/listFragId"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_below="@id/btnId" />
+	</RelativeLayout>
+
+MainActivity.java：
+
+	public class MainActivity extends Activity {
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+		}
+		
+		public void showList(View view){
+			getFragmentManager().beginTransaction().replace(R.id.listFragId, new PersonFragment()).commit();
+		}
+	}
+
+
+![android_fragment15.png]({{site.baseurl}}/public/img/android_fragment15.png)
