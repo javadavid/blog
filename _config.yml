@@ -36,7 +36,7 @@ post_demo_basepath: "http://xh888.github.io/page_demo"
 #   shortname: painterlin
 
 # 主题设置，自动激活某个标签
-active: 技术
+active: tags
 
 # 首页除了最新文章外显示分类
 # cates: 
