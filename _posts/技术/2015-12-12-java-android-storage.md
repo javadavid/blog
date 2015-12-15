@@ -47,7 +47,7 @@ tags:
 	![android_storage02.png]({{site.baseurl}}/public/img/android_storage02.png)
 
 
-####Shared Preferences应用（延伸）
+####Shared Preferences应用（延伸 Storage01）
 
 MainActivity：设置文字的属性后，按退出后重启依然保存内容
 
@@ -216,7 +216,7 @@ MainActivity.java：
 
 ![android_storage04.png]({{site.baseurl}}/public/img/android_storage04.png)
 
-####Internal Storage应用（延伸）
+####Internal Storage应用（延伸 Storage02）
 
 添加Options菜单，选择后显示AlertDialog对话框，选择打开相应文件
 
@@ -225,6 +225,7 @@ MainActivity.java：
 - 点击列表重置nameId的Text属性，读取显示文件内容
 
 MainActivity.java：
+
 	public class MainActivity extends Activity {
 		private EditText nameId,contentId;
 		private AlertDialog dialog;
@@ -296,6 +297,10 @@ MainActivity.java：
 
 
 ![android_storage05.png]({{site.baseurl}}/public/img/android_storage05.png)
+
+
+###External Storage
+
 
 
 
