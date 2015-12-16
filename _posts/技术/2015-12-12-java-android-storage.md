@@ -298,11 +298,111 @@ MainActivity.java：
 
 ![android_storage05.png]({{site.baseurl}}/public/img/android_storage05.png)
 
-
-###External Storage
-
+###External Storage（待补充）
 
 
+###SQLite Databases
 
-未完待续。。
+创建sqlite的数据库文件默认位置保存在 安装包的database目录下面
+
+- 继承SQLiteOpenHelper方法，并且实现其构造函数，实现数据库文件实例化；
+- onCreate：初始化数据库的table文件；
+- onUpgrade：当数据库版本更新时候的 执行方法；
+
+DBHelp.java：
+
+	public class DBHelp extends SQLiteOpenHelper {
+		public DBHelp(Context context) {
+			/**
+			 * 第二参数：数据库名称，默认的位置在安装包的database目录下面
+			 * 第三参数：CursorFactory 游标工厂。
+			 * 第四参数：数据库版本号
+			 */
+			super(context, "gp06.db", null, 1);	
+		}
+	
+		//初始化数据库；
+		@Override
+		public void onCreate(SQLiteDatabase db) {
+			db.execSQL("create table t_fav(_id integer primary key,id,title,info,web_content,fav_data,model_type)");
+			db.execSQL("create table t_person(_id integer primary key,name,age,tel)");
+		}
+	
+		//更新或者升级数据库；
+		@Override
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			if(newVersion>oldVersion){
+				db.execSQL("drop table if exists t_fav");
+				db.execSQL("drop table if exists t_person");
+			}
+		}
+	}
+
+
+- 通过构造SimpleCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags)初始化SimpleCursorAdapter类，设置layout中控件对象的对应关系；
+- 通过getReadableDatabase()方法，实例化SQLiteDatabase对象；
+- 然后通过query查询对象游标
+- 设置adapter游标
+- 通过ContentValues存储对象值，然后插入值。
+- 关闭数据库，载入数据
+
+MainActivity.java代码：
+	
+	public class MainActivity extends Activity {
+		private ListView lv;
+		private Cursor cursor;
+		private DBHelp dbHelper;
+		private SimpleCursorAdapter adapter;
+		
+		private String[] columns=new String[]{"_id","name","age","tel"};
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+			lv=(ListView) findViewById(R.id.lvId);
+			dbHelper=new DBHelp(getApplicationContext());
+			adapter=new SimpleCursorAdapter(getApplicationContext(), R.layout.item_user, cursor,
+					new String[]{"name","age","tel"} ,
+					new int[]{R.id.nameId,R.id.ageId,R.id.telId},
+					SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+			loadData();
+			lv.setAdapter(adapter);
+		}
+		
+		private void loadData() {
+			SQLiteDatabase sdb=dbHelper.getReadableDatabase();
+			
+			//查询表
+			cursor=sdb.query("t_person", columns, null, null, null, null, null);
+			
+			//切换数据源；
+			adapter.swapCursor(cursor);
+		}
+
+		//向数据库添加数据
+		public void addPerson(View view){
+			SQLiteDatabase sdb=dbHelper.getReadableDatabase();
+			ContentValues values=new ContentValues();
+			
+			values.put("name", "张三");
+			values.put("age", (int)(Math.random()*10+20));
+			values.put("tel",10086);
+			
+			long id=sdb.insert("t_person", null, values);
+			if(id!=-1){
+				Toast.makeText(getApplicationContext(), " --> 数据插入成功 ", 1).show();
+			}
+			sdb.close();
+			
+			loadData();
+		}
+	}
+
+![android_storage06.png]({{site.baseurl}}/public/img/android_storage06.png)
+
+
+
+
+
+
 
