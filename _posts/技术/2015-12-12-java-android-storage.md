@@ -338,6 +338,7 @@ DBHelp.java：
 		}
 	}
 
+MainActivity.java代码：
 
 - 通过构造SimpleCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags)初始化SimpleCursorAdapter类，设置layout中控件对象的对应关系；
 - 通过getReadableDatabase()方法，实例化SQLiteDatabase对象；
@@ -346,7 +347,7 @@ DBHelp.java：
 - 通过ContentValues存储对象值，然后插入值。
 - 关闭数据库，载入数据
 
-MainActivity.java代码：
+
 	
 	public class MainActivity extends Activity {
 		private ListView lv;
