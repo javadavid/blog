@@ -301,7 +301,7 @@ MainActivity.java：
 ###External Storage（待补充）
 
 
-###SQLite Databases
+###SQLite Databases（Storage04）
 
 创建sqlite的数据库文件默认位置保存在 安装包的database目录下面
 
@@ -347,7 +347,7 @@ MainActivity.java代码：
 - 通过ContentValues存储对象值，然后插入值。
 - 关闭数据库，载入数据
 
-
+<nobr/>
 	
 	public class MainActivity extends Activity {
 		private ListView lv;
