@@ -43,6 +43,7 @@ tags:
 
 
 继承类ContentProvider，可以覆写以下的数据库操作方法。
+
 - onCreate()
 - delete(Uri, String, String[])
 - getType(Uri)
