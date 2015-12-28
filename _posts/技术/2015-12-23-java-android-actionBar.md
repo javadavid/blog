@@ -47,9 +47,10 @@ tags:
 	        android:title="删除"/>
 	</menu>
 
-![android_actionbar01.png]({{site.baseurl}}/public/img/html/android_actionbar01.png)
+![android_actionbar01.png]({{site.baseurl}}/public/img/android_actionbar01.png)
 
 MainActivity.java：
+
 - activity中通过getActionBar()方法取得actionBar
 - setDisplayShowHomeEnabled()：设置标题栏是否可用
 - setDisplayHomeAsUpEnabled()：设置可以向上导航
@@ -143,6 +144,6 @@ AndroidManifest.xml：
 
 activity节点中：android:uiOptions="splitActionBarWhenNarrow"：启动分离式操作，将actionbar菜单分发到底部，如图显示
 
-![android_actionbar02.png]({{site.baseurl}}/public/img/html/android_actionbar02.png)
+![android_actionbar02.png]({{site.baseurl}}/public/img/android_actionbar02.png)
 
 ###ActionBar实例（ActionBar02）
