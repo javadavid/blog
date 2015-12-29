@@ -12,6 +12,7 @@ tags:
 显示窗体的标题栏，提供导航功能；在3.0以后用来替代tittle bar和menu。
 
 定义的图标在main.xml中;showAsAction中的选择项
+
 - ifRoom：根据导航栏的宽度来决定是否溢出
 - never：只显示在溢出列表中
 - always：总是会显示在标题栏
