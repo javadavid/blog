@@ -298,7 +298,65 @@ MainActivity.java：
 
 ![android_storage05.png]({{site.baseurl}}/public/img/android_storage05.png)
 
-###External Storage（待补充）
+###External Storage（扩展存储）
+目录`"/mnt/sdcard"` 
+
+![android_storage07.png]({{site.baseurl}}/public/img/android_storage07.png)
+
+分别对应 **Environment** 下面的各种常量名称;
+
+- Environment.getDataDirectory():取扩展卡的文件根路径
+- Environment.getExternalStorageState():取得扩展卡当前状态
+- Bitmap.compress(CompressFormat format, int quality, OutputStream stream):将图片压缩的方法;
+- BitmapFactory.decodeFile(String pathName):转换文件为BitMap类型;
+
+<nobr/>
+
+	public class FileUtils {
+		// 保存图片的缓存路径
+		public static final String CACHE_DIR = Environment.getDataDirectory() + "/Storage03/imgcache/";
+	
+		public static final int FORMAT_JPEG=1;
+		public static final int FORMAT_PNG=2;
+		
+		public static boolean isMounted() {
+			//返回扩展卡是否挂载
+			return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+		}
+	
+		//保存为字节流图片
+		public static void saveImage(String url, byte[] bytes) throws IOException {
+			if(!isMounted()) return ;
+			File dir=new File(CACHE_DIR);
+			if(!dir.isDirectory()) dir.mkdirs();	//判断文件路径
+			FileOutputStream fos=new FileOutputStream(new File(dir,getFileName(url)));
+			fos.write(bytes);
+			fos.close();
+		}
+	
+		//保存为Bitmap图片
+		public static void saveImage(String url, Bitmap bitmap,int format) throws IOException {
+			if(!isMounted()) return ;
+			File dir=new File(CACHE_DIR);
+			if(!dir.isDirectory()) dir.mkdirs();	//判断文件路径
+			FileOutputStream fos=new FileOutputStream(new File(dir,getFileName(url)));
+			
+			bitmap.compress(format==FORMAT_JPEG?CompressFormat.JPEG:CompressFormat.PNG, 100, fos);		//将输入流转换成BitMap流
+		}
+		
+		public static Bitmap readImage(String url) {
+			if(!isMounted()) return null;
+			File imageFile=new File(CACHE_DIR,getFileName(url));
+			if(imageFile.exists()){
+				return BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+			}
+			return null;
+		}
+		
+		public static String getFileName(String url){
+			return url.substring(url.lastIndexOf("/")+1);
+		}
+	}
 
 
 ###SQLite Databases（Storage04）
