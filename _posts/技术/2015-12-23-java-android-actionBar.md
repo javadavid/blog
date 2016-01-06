@@ -162,7 +162,7 @@ activity节点中：android:uiOptions="splitActionBarWhenNarrow"：启动分离�
 	        android:layout_height="wrap_content"/>
 	</RelativeLayout>
 
-</br>
+<nobr/>
 
 	<?xml version="1.0" encoding="utf-8"?>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -183,7 +183,7 @@ activity节点中：android:uiOptions="splitActionBarWhenNarrow"：启动分离�
 	        android:layout_margin="20dp"/>
 	</LinearLayout>
 
-<br/>
+<nobr/>
 
 	<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 	    <item
