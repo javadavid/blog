@@ -43,7 +43,7 @@ activity_main.xml：布局文件
 
 - 需要重写构造方法和loadInBackground方法；
 - onStartLoading()当Loader启动时候强制初始化onForceLoad()方法；或者在initLoader后面调用；
-- loadInBackground()：是子线程执行的方法；执行数据源的加载
+- loadInBackground()：是子线程执行的方法；后台线程执行数据源的加载
 
 <nobr/>
 
@@ -84,7 +84,6 @@ MainActivity.java实现接口LoaderCallbacks 进行方法回调
 - onLoaderReset(Loader<Cursor> loader)：重置Loader
 - searchView实现其文本发生改变的监听接口setOnQueryTextListener
 	- 当文字或者点击按钮提交的事件；
-
 
 <nobr/>
 
