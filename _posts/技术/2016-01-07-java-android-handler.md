@@ -12,10 +12,12 @@ tags:
 
 起到线程之间的通信作用的类；比如主线程和子线程间 
 
-Looper：循环读取MessageQueue队列的线程列表
-MessageQueue：存放相应的消息
-Handler：对消息发送和处理
-Message：封装通信信息；
+- Looper：循环读取MessageQueue队列的线程列表
+- MessageQueue：存放相应的消息
+- Handler：对消息发送和处理
+- Message：封装通信信息；
+- 对于线程的分发执行方法dispatchMessage(Message msg)；
+	- 其中msg：绑定了调用方target 和 回调callback
 
 ####子线程向主线程通信 sendMessage(Message msg)方式
 
@@ -214,4 +216,47 @@ MainActivity.java 子线程代码块 ： 向主线程发送一个线程代码块
 ![android_handler02.png]({{site.baseurl}}/public/img/android_handler02.png)
 
 
+####主线程向子线程通信
 
+MainActivity.java：
+
+- mHandler.sendMessage(msg)：向子线程发送数据 实际上是发送到MessageQueue队列
+- Looper.prepare()：此时会创建MessageQueue
+- 子线程中 new Handler()：将Handler 中mQueue会指向  创建的MessageQueue列中
+- Looper.loop()：循环读取MessageQueue 中的Message对象
+
+
+<nobr/>
+
+	public class MainActivity extends Activity {
+		private Handler mHandler;
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+			new Connection().start();
+			
+		}
+		public void Threadbtn(View view){
+			if(mHandler!=null){
+				Message msg=Message.obtain();
+				msg.obj="我是主线程；";
+				mHandler.sendMessage(msg);	//向子线程发送数据
+			}
+		}
+		class Connection extends Thread{
+			@Override
+			public void run() {
+				Looper.prepare();	//此时会创建MessageQueue
+				mHandler=new Handler(){		//将Handler放入到MessageQueue队列中
+					@Override
+					public void handleMessage(Message msg) {
+						Log.i("info", new Date()+"-->"+msg.obj);
+					}
+				};
+				Looper.loop();	//循环读取MessageQueue 中的Message
+			}
+		}
+	}
+
+![android_handler03.png]({{site.baseurl}}/public/img/android_handler03.png)
