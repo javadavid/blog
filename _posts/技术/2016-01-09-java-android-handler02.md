@@ -80,7 +80,7 @@ MainActivity.java：
 - 将子线程通过handleMessage方法接收，并且解析
 - 并且在Item布局载入时候接收Image文件流（BitMap对象）
 
-<nobr>
+<nobr/>
 
 	public class MainActivity extends Activity {
 	
@@ -145,7 +145,7 @@ FeedAdapter.java
 - 启动每一个Item对象调用子线程下载图片，返回给主线程
 - 并且设置图片的Tag，方便主线程查找对象并设置ImageView对应的图片流
 
-<nobr>
+<nobr/>
 
 	public class FeedAdapter extends BaseAdapter {
 		private Context context;
