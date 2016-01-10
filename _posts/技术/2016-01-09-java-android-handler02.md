@@ -11,11 +11,10 @@ tags:
 
 通过Handler子线程下载解析数据 显示LisView列表；（Handler04）
 
-
 相应的类：
+
 - URLs.java：保存URL地址；
 - Feed.java/FeedData.java：分别是Json的字段；
-
 
 ![android_handler04.png]({{site.baseurl}}/public/img/android_handler04.png)
 
