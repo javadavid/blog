@@ -26,10 +26,9 @@ tags:
 - JMS消息（Message）：用于封装传递消息对象；简单文本(TextMessage)、可序列化的对象 (ObjectMessage)、属性集合 (MapMessage)、字节流 (BytesMessage)、原始值流 (StreamMessage)
 
 
+![JMS模型]({{site.baseurl}}/public/img/java_jms_module.png)
 
-![JMS模型](http://b.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=eb2af6ab8bd4b31ce4319ce9e6bf4c1a/adaf2edda3cc7cd92cd7d9313901213fb90e9164.jpg)
-
-
+java_jms_status.png
 ###发送的类型
 
 - 点对点（Point-to-Point）：一个生产者 --> 一个消费者
@@ -196,7 +195,9 @@ ConnectionFactory -> Connection连接后 -> Session -> Destination 和 创建生
   
 ![java_jms_consumer.png]({{site.baseurl}}/public/img/java_jms_consumer.png)
 
+在服务器可以显示消息传递状态 http://localhost:8161/admin/queues.jsp
 
+![java_jms_status]({{site.baseurl}}/public/img/java_jms_status.png)
 
 参考
 
