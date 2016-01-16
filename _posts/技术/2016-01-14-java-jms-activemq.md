@@ -5,7 +5,7 @@ date: 2016/1/14 14:53:16
 categories:
 - 技术
 tags:
-- Java
+- 框架
 ---
 
 ###JMS
@@ -28,7 +28,6 @@ tags:
 
 ![JMS模型]({{site.baseurl}}/public/img/java_jms_module.png)
 
-java_jms_status.png
 ###发送的类型
 
 - 点对点（Point-to-Point）：一个生产者 --> 一个消费者

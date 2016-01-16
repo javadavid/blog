@@ -5,8 +5,7 @@ date: 2015/11/23 17:11:52
 categories:
 - 技术
 tags:
-- Java 
-- Spring
+- 框架 
 ---
 
 ###首先Struts和Spring的MVC比较
