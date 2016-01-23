@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Android ViewPager 学习记录（1）"
+title:  "Android ViewPager 学习记录"
 date: 2016/1/22 12:51:39  
 categories:
 - 技术
