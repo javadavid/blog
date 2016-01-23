@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-
+###实例一：
 实现左右移动ViewPager滑块，自动更换标题HorizontalScrollView列表实现；
 
 初始化总布局文件activity_main.xml，实现顶部和底部的控件布局；
@@ -263,3 +263,156 @@ MainActivity.java：
 
 ![android_viewpager03.png]({{site.baseurl}}/public/img/android_viewpager03.png)
 
+###实例二：
+通过ListFragment实现ViewPager数据的填充，对support中包的各个控件使用；
+
+ContentFragment：继承support包中的 ListFragment，实现onCreate、onCreateView、onDestroyView、onDestroy：Fragment控件和FragmentItem的创建和销毁的方法；onCreate负责初始化数据源，onActivityCreated负责将数据源设置到adapter中；
+
+	public class ContentFragment extends ListFragment{
+		private String title;
+		private List<String> datas;
+		private ArrayAdapter<String> adapter;
+		
+		public static ContentFragment newInstance(String title){
+			ContentFragment cf=new ContentFragment();
+			Bundle args = new Bundle();
+			args.putString("title", title);
+			cf.setArguments(args);
+			return cf;
+		}
+		
+		//创建ListFragment
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			Log.i("info", "-- onCreate --");
+			title = getArguments().getString("title");
+			datas=new ArrayList<String>();
+			for(int i=0;i<20;i++){
+				datas.add(title + " -- " + i);
+			}
+			adapter=new ArrayAdapter<String>(getActivity(),R.layout.item,datas);
+		}
+		
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+			setListAdapter(adapter);
+		}
+	
+	
+		//ListItem单击事件；方法继承ContentFragment
+		@Override
+		public void onListItemClick(ListView l, View v, int position, long id) {
+			Toast.makeText(getActivity(),"-->" + datas.get(position), 0).show();
+		}
+		
+		//ListFragment中的子控件创建
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			Log.i("info", "-- onCreateView --");
+			return super.onCreateView(inflater, container, savedInstanceState);
+		}
+		
+		//ListFragment中的子控件销毁
+		@Override
+		public void onDestroyView() {
+			Log.i("info", "-- onDestroyView --");
+			super.onDestroyView();
+		}
+		
+		//ListFragment销毁
+		@Override
+		public void onDestroy() {
+			Log.i("info", "-- onDestroy --");
+			super.onDestroy();
+		}
+	}
+
+item.xml 占位符 和 activity_main.xml主布局：
+
+	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:textSize="20sp"
+	    android:layout_margin="10dp"
+	    tools:context=".MainActivity" />
+
+<nobr/>
+
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    tools:context=".MainActivity" >
+	    <android.support.v4.view.ViewPager
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/viewPagerId"/>
+	</RelativeLayout>
+
+
+MainActivity.java：继承FragmentActivity，因为要使用FragmentActivity.getSupportFragmentManager()取得的是support包中的fragment；
+
+MyPagerAdapter适配器继承support包中的FragmentPagerAdapter：必须覆写其中的构造MyPagerAdapter(FragmentManager fm)和getItem(int position)方法、getCount()方法；
+
+	public class MainActivity extends FragmentActivity{
+		
+		private ViewPager viewPager;
+		private List<Fragment> fragments;
+		private FragmentPagerAdapter adapter;
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+			
+			viewPager=(ViewPager) findViewById(R.id.viewPagerId);
+			
+			//初始化数据
+			initFragment();
+		}
+	
+		private void initFragment() {
+			fragments=new ArrayList<Fragment>();
+			fragments.add(ContentFragment.newInstance("A"));
+			fragments.add(ContentFragment.newInstance("B"));
+			fragments.add(ContentFragment.newInstance("C"));
+			fragments.add(ContentFragment.newInstance("D"));
+			fragments.add(ContentFragment.newInstance("E"));
+			
+			adapter=new MyPagerAdapter(getSupportFragmentManager());
+			
+			viewPager.setAdapter(adapter);
+		}
+	
+		class MyPagerAdapter extends FragmentPagerAdapter{
+	
+			//FragmentPagerAdapter必须要实现的一个构造方法；
+			public MyPagerAdapter(FragmentManager fm) {
+				super(fm);
+			}
+	
+			@Override
+			public Fragment getItem(int position) {
+				return fragments.get(position);
+			}
+	
+			@Override
+			public int getCount() {
+				return fragments.size();
+			}
+		}
+	}
+
+
+![android_viewpager04.png]({{site.baseurl}}/public/img/android_viewpager04.png)
+
+下面看下其中ListFragment控件在其中的生命周期
+
+![android_viewpager05.png]({{site.baseurl}}/public/img/android_viewpager05.png)
+
+在移动viewPager的过程中，listFragment中始终保存了ListItem的状态信息；从运行来看在移动过程中看，listFragment只创建一次就不会销毁，而只是其中的Item在创建和销毁，销毁只在task结束或者返回时执行；
