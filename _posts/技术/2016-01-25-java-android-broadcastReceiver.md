@@ -14,6 +14,7 @@ tags:
 ####动态注册接收系统广播操作：
 
 MainActivity.java：
+
 - 继承BroadcastReceiver实现 onReceive(Context context, Intent intent)：用来接收广播，其中包含了receiver对象的context和intent信息，一般系统消息都被装载到了Intent Extra中
 - 实例化广播myBroadCastReceiver，和IntentFilter，其中IntentFilter接收Intent的实例操作类；
 - 当启动registerReceiver(BroadcastReceiver receiver, IntentFilter filter)：将BroadCastReceiver中匹配的Action注册到Activity中
@@ -77,9 +78,6 @@ MainActivity.java：
 		</intent-filter>            
     </receiver>
 
-
-同样通过registerReceiver/unregisterReceiver注册和取消；
-
 通过Activity下面的sendBroadcast(intent)：发送intent广播信息；
 
 	public class MainActivity extends Activity {
@@ -94,11 +92,6 @@ MainActivity.java：
 		    intent.putExtra("msg", "hello receiver.");  
 			sendBroadcast(intent);
 		}
-		@Override
-		protected void onDestroy() {  
-		    super.onDestroy();  
-		    unregisterReceiver(br);  
-		}
 	}
 
 MyReceiver.java：
@@ -111,3 +104,40 @@ MyReceiver.java：
 	}
 
 ![android_broadcastreceiver02.png]({{site.baseurl}}/public/img/android_broadcastreceiver02.png)
+
+####静态注册查看网络状态信息；
+NetWorkReceiver.java
+
+- ConnectivityManager：管理网络状态，负责告诉程序改变的网络状态；
+- NetworkInfo：包含网络状态的信息，getType():取得网络状态的标识;info.isAvailable()判断当前网络状态是否可用
+
+<nobr/>
+
+	//接受网络的方法类
+	public class NetWorkReceiver extends BroadcastReceiver {
+	
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.i("info", intent.getAction());
+			
+			//取得系统服务连接管理
+			ConnectivityManager conManger=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+			//网络信息管理
+			NetworkInfo info = conManger.getActiveNetworkInfo();
+			if(info!=null&&info.isAvailable()){
+				if(info.getType() == ConnectivityManager.TYPE_MOBILE){
+					Log.i("info", "网络连接：移动");
+				}else if(info.getType() == ConnectivityManager.TYPE_WIFI){
+					Log.i("info", "网络连接：Wifi");
+				}
+			}else{
+				Log.i("info", "网络断开");
+			}
+		}
+	}
+
+![android_broadcastreceiver03.png]({{site.baseurl}}/public/img/android_broadcastreceiver03.png)
+
+注意：在网络连接时，有系统程序会对网络状态监听，所以会执行多个程序监听操作；
+
+
