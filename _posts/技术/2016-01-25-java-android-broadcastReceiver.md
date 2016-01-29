@@ -11,7 +11,7 @@ tags:
 ###BroadcastReceiver：
 广播接收者：用来接收系统和应用的广播；比如系统的监听电量状态操作、网络状态等
 
-####动态注册接收系统广播操作：
+###动态注册接收系统广播操作：
 
 MainActivity.java：
 
@@ -68,7 +68,7 @@ MainActivity.java：
 
 ![android_broadcastreceiver01.png]({{site.baseurl}}/public/img/android_broadcastreceiver01.png)
 
-####静态注册自定义广播地址
+###静态注册自定义广播地址
 
 在AndroidManifest.xml：添加对receiver的声明和IntentFilter名称定义，接收器会随着系统的生命周期创建和销毁，不需要register和unregister
 
@@ -106,7 +106,7 @@ MyReceiver.java：
 
 ![android_broadcastreceiver02.png]({{site.baseurl}}/public/img/android_broadcastreceiver02.png)
 
-####静态注册查看网络状态信息；
+###静态注册查看网络状态信息；
 NetWorkReceiver.java
 
 - ConnectivityManager：管理网络状态，负责告诉程序改变的网络状态；
@@ -148,7 +148,7 @@ AndroidManifest.xml：
 ![android_broadcastreceiver03.png]({{site.baseurl}}/public/img/android_broadcastreceiver03.png)
 
 注意：在网络连接时，android.net.conn.CONNECTIVITY_CHANGE会有多个状态的改变（正在连接，连接成功）
-####不同应用间发送和接收自定义广播；
+###不同应用间发送和接收自定义广播；
 - 线程通过Context.sendBroadcast(Intent)发送；BroadCastReceiver04
 
 布局文件activity_main.xml
@@ -273,7 +273,7 @@ AndroidManifest.xml:同样若有权限，则需要声明使用权限
 - intent.setPackage(String packageName):设置广播**发送**的所在包名称
 - 注册文件中：android:exported="false":同样可以设置是否**接收**访问以外的包名称
 
-####使用LocalBroadcastManager发送本地广播；
+###使用LocalBroadcastManager发送本地广播；
 - LocalBroadcastManager位于support包中的类，用来管理本地（自己的APP程序）的广播的发送
 - 相对于全局的广播更加的高效
 - 通过LocalBroadcastManager.getInstance(Context)实例化对象；通过register注册和unregister取消注册；通过sendBroadcast(Intent)发送
@@ -333,5 +333,115 @@ AndroidManifest.xml:同样若有权限，则需要声明使用权限
 同样，运行结果如图：
 
 ![android_broadcastreceiver06.png]({{site.baseurl}}/public/img/android_broadcastreceiver06.png)
+
+
+###有序广播；
+上面介绍的都是普通的广播，此广播的接收属于异步的方式；接下来的有序广播提供了一个广播的接收序列，是有顺序的，期间可以终止(abortBroadcast)接受；
+
+定义三个接受广播
+
+- 通过intent.getStringExtra()取得参数值
+- setResultExtras(bundle)：设置传递到下个Receiver的Bundle值
+- getResultExtras(true)：取得上个Receiver传递过来的Bundle对象；true则创建的是一个无数据的map；false则内部声明的是一个map指向null的引用；
+- abortBroadcast():是终止当前的顺序传递；
+
+FirstReceiver.java
+
+	public class FirstReceiver extends BroadcastReceiver {
+	
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+			String msg = intent.getStringExtra("msg");
+			Log.i("info",msg+" @FirstReceiver");
+			Bundle bundle=new Bundle();
+			bundle.putString("msg", msg);
+	
+			//将 Bundle 设置给下个Receiver
+			setResultExtras(bundle);
+		}
+	}
+
+SecondReceiver.java
+	
+	public class SecondReceiver extends BroadcastReceiver {
+	
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+			String msg = getResultExtras(true).getString("msg");
+			Log.i("info",msg+" @SecondReceiver");
+			Bundle bundle=new Bundle();
+			bundle.putString("msg", msg);
+	
+			//将 Bundle 设置给下个Receiver
+			setResultExtras(bundle);
+			
+			abortBroadcast();
+		}
+	
+	}
+	
+ThirdReceiver.java
+	
+	public class ThirdReceiver extends BroadcastReceiver {
+	
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+			String msg = getResultExtras(true).getString("msg");
+			Log.i("info",msg+" @ThirdReceiver");
+			Bundle bundle=new Bundle();
+			bundle.putString("msg", msg);
+		}
+	
+	}
+
+在配置文件中注册权限(permission)和优先级(android:priority)
+
+	<receiver android:name="com.example.receiver.FirstReceiver">
+	            <intent-filter android:priority="100">
+	                <action android:name="com.example.receiver.BROADCASTRECEIVER"/>
+	            </intent-filter>
+	        </receiver>
+	        <receiver android:name="com.example.receiver.SecondReceiver">
+	            <intent-filter android:priority="99">
+	                <action android:name="com.example.receiver.BROADCASTRECEIVER"/>
+	            </intent-filter>
+	        </receiver>
+	        <receiver android:name="com.example.receiver.ThirdReceiver">
+	            <intent-filter android:priority="98">
+	                <action android:name="com.example.receiver.BROADCASTRECEIVER"/>
+	            </intent-filter>
+	        </receiver>
+
+发送广播
+
+- 通过intent中方法putExtra()值传递数据和对象
+- sendOrderedBroadcast(Intent intent,String permission):发送序列广播
+
+<nobr/>
+
+	public class MainActivity extends Activity {
+	
+	    @Override
+	    protected void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.activity_main);
+	    }
+	    
+	    public void send(View v){
+	    	Intent intent = new Intent("com.example.receiver.BROADCASTRECEIVER");
+	        intent.putExtra("msg", "hello receiver");
+	        sendOrderedBroadcast(intent,"com.example.receiver.PERMISSION");
+	    }
+	}
+
+
+![android_broadcastreceiver07.png]({{site.baseurl}}/public/img/android_broadcastreceiver07.png)
+
+abortBroadcast阻塞传播
+
+![android_broadcastreceiver08.png]({{site.baseurl}}/public/img/android_broadcastreceiver08.png)
 
 
