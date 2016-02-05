@@ -50,7 +50,7 @@ tags:
 
 ----------
 
-####以上情况BActivity是对话框按钮时候的启动、跳转、返回
+#### 以上情况BActivity是对话框按钮时候的启动、跳转、返回
 ![android_activity6]({{site.baseurl}}/public/img/android_activity6.png)
 
 跳转
@@ -66,7 +66,7 @@ tags:
 
 #### 界面旋转变量的保存
 
->####Activity会重新创建和加载，使数据的值重置，可以使用以下覆写的2个方法进行保存取得数据；
+>#### Activity会重新创建和加载，使数据的值重置，可以使用以下覆写的2个方法进行保存取得数据；
 	
 	//在onPause方法后执行，保存变量值
 	protected void onSaveInstanceState(Bundle outState)

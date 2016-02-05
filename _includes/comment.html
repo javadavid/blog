@@ -1,7 +1,14 @@
-{% assign data-thread-key = '/' %}
-{% if page.id != null%}
-  {% assign  data-thread-key = page.id %}
+{% assign  prefix = page.url| split:'.' | last | downcase %}
+
+{% if page.url == '/'%}
+	{% assign  def_url = '/index.html' %}
+{% elsif prefix != 'html'  %}
+	{% assign def_url = page.url | append:'.html' %} 
+{% else %}
+	{% assign def_url = page.url %}
 {% endif %}
-<!-- 多说评论框 start -->
-<div  class="ds-thread" data-thread-key="{{ page.url|prepend:site.url}}" data-title="{{ page.title }}" data-url="{{ page.url|prepend:site.url}}"></div>
+
+
+<!-- 多说评论框 start --> 
+<div  class="ds-thread" data-thread-key="{{ def_url | prepend:site.url}}" data-title="{{ page.title }}" data-url="{{ def_url | prepend:site.url}}"></div>
 <!-- 多说评论框 end -->
