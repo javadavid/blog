@@ -150,7 +150,7 @@ AndroidManifest.xml：
 
 注意：在网络连接时，android.net.conn.CONNECTIVITY_CHANGE会有多个状态的改变（正在连接，连接成功）
 
-###不同应用间发送和接收自定义广播；
+### 不同应用间发送和接收自定义广播；
 - 线程通过Context.sendBroadcast(Intent)发送；BroadCastReceiver04
 
 布局文件activity_main.xml
