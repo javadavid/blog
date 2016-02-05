@@ -144,4 +144,6 @@ blockquote p {
 }
 
 
-
+div#tags.tab-pane.active{
+	overflow:hidden;
+}
