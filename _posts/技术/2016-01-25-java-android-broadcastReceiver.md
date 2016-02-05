@@ -140,15 +140,17 @@ NetWorkReceiver.java
 AndroidManifest.xml：
 
 	<!-- 静态注册广播接收器 -->
-	        <receiver android:name="com.example.receiver.NetWorkReceiver" >
-	            <intent-filter>
-	                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-	            </intent-filter>
-	        </receiver>
+	<receiver android:name="com.example.receiver.NetWorkReceiver" >
+		<intent-filter>
+			<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+		</intent-filter>
+	</receiver>
+   
 ![android_broadcastreceiver03.png]({{site.baseurl}}/public/img/android_broadcastreceiver03.png)
 
 注意：在网络连接时，android.net.conn.CONNECTIVITY_CHANGE会有多个状态的改变（正在连接，连接成功）
-### 不同应用间发送和接收自定义广播；
+
+###不同应用间发送和接收自定义广播；
 - 线程通过Context.sendBroadcast(Intent)发送；BroadCastReceiver04
 
 布局文件activity_main.xml
@@ -443,5 +445,7 @@ ThirdReceiver.java
 abortBroadcast阻塞传播
 
 ![android_broadcastreceiver08.png]({{site.baseurl}}/public/img/android_broadcastreceiver08.png)
+
+
 
 
