@@ -9,7 +9,7 @@ tags:
 ---
 
 
-##作用
+## 作用
 
 在下拉状态栏显示一个消息通知框；
 
@@ -41,7 +41,7 @@ when) ：过时的方法
 	}
 
 
-###发送普通通知
+### 发送普通通知
 
 	public void notify01(View view){
 		NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext());
@@ -59,7 +59,7 @@ when) ：过时的方法
 	
 ![android_notification01.png]({{site.baseurl}}/public/img/android_notification01.png)
 
-###发送进度条通知	
+### 发送进度条通知	
 	
 	public void notify02(View view){
 		new Thread(){
@@ -93,7 +93,7 @@ when) ：过时的方法
 ![android_notification02.png]({{site.baseurl}}/public/img/android_notification02.png)
 
 
-###加载大`视图`信息
+### 加载大`视图`信息
 
 	public void notify03(View view){
 		NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext());
@@ -114,7 +114,7 @@ when) ：过时的方法
 
 ![android_notification03.png]({{site.baseurl}}/public/img/android_notification03.png)
 
-###加载大`图片`信息
+### 加载大`图片`信息
 
 	public void notify04(View view){
 		NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext());
@@ -133,7 +133,7 @@ when) ：过时的方法
 
 ![android_notification04.png]({{site.baseurl}}/public/img/android_notification04.png)
 
-##说明
+## 说明
 - setOngoing(boolean ongoing):是否一直停留在状态栏	若是false:点击Clear则清除
 - setAutoCancel(boolean autoCancel)：消息栏点击后消失
 - setDefaults(int defaults)：设置默认的提示信息。如：(Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE)响铃和震动

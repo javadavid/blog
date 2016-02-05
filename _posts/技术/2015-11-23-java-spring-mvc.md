@@ -8,7 +8,7 @@ tags:
 - 框架 
 ---
 
-###首先Struts和Spring的MVC比较
+### 首先Struts和Spring的MVC比较
 
 ![Struts](http://img.my.csdn.net/uploads/201211/29/1354171583_5590.png)
 
@@ -26,7 +26,7 @@ tags:
 在于Struts控制器在Action类中完成，而Spring的是在前端的分发逻辑调用。
 
 
-###简单的 Spring MVC的框架控制（事例）
+### 简单的 Spring MVC的框架控制（事例）
 
 
 web.xml：需要配置相应的servlet，通过DispatcherServlet过滤，启动入口
@@ -75,7 +75,7 @@ HelloWorldController类
 
 
 
-###注解方式实现MVC控制器
+### 注解方式实现MVC控制器
 
 WEB.XML:配置配置 
 

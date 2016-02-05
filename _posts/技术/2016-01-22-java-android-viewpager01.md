@@ -10,7 +10,7 @@ tags:
 
 
 
-##ViewPager
+## ViewPager
 用来显示界面子控件的页面的切换效果。是android support扩展包中的一个空间，他的控件适配器为PagerAdapter
 
 看代码演示；

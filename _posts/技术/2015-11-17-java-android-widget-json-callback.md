@@ -10,11 +10,11 @@ tags:
 
 通过回调函数设置list下拉框从网络读取json值进行设置
 
-###基本类：
+### 基本类：
 
 ![android_spinner01]({{site.baseurl}}/public/img/android_spinner01.png)
 
-###FeedCategory：实体类
+### FeedCategory：实体类
 
 	public class FeedCategory {
 		private int id ;
@@ -37,7 +37,7 @@ tags:
 		}
 	}
 
-###工具类
+### 工具类
 
 - CategroyTask：解析JSON后返回List<FeedCategory>集合，其中使用回调接口CallBack来将数据返回给主线程；
 
@@ -108,7 +108,7 @@ tags:
 		}
 
 
-###主类
+### 主类
 
 MainActivity：通过调用回调函数，直接取得链接对象的json后传给datas并且设置adapter
 
@@ -130,11 +130,11 @@ MainActivity：通过调用回调函数，直接取得链接对象的json后传�
 ----------
 
 
-##11/18日补充
+## 11/18日补充
 
 ![android_new02.PNG]({{site.baseurl}}/public/img/android_new02.png)
 
-###FeedAdapter.java
+### FeedAdapter.java
 
 继承BaseAdapter 用来构造Feed中的适配器，设置item中的各组件是属性值；
 
@@ -197,7 +197,7 @@ MainActivity：通过调用回调函数，直接取得链接对象的json后传�
 >LayoutInflater.from(context).inflate(int resource, ViewGroup root)：找到相应的布局文件实例化；resource:是布局文件ID，root：是Layout文件中的根视图；若是提供了root,root则是生成的层次结构的根视图，否则是整个视图；
 
 
-###FeedTask.java
+### FeedTask.java
 
 用来解析JSON中数据放入List<Feed>集合中；
 

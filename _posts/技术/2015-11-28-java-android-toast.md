@@ -9,7 +9,7 @@ tags:
 ---
 
 
-###实例化
+### 实例化
 
 分为2种，实现起来比较简单
 
@@ -17,7 +17,7 @@ tags:
 - 静态方法实例化，makeText(Context context, CharSequence text, int duration)
 
 
-###代码：
+### 代码：
 	public void showTosat01(View view){
 		Toast toast=new Toast(getApplicationContext());
 		
@@ -48,7 +48,7 @@ tags:
 ![android_tosat01.png]({{site.baseurl}}/public/img/android_tosat01.png)
 ![android_tosat02.png]({{site.baseurl}}/public/img/android_tosat02.png)
 
-###说明：
+### 说明：
 - Color.argb(int alpha, int red, int green, int blue)：设置颜色和透明度
 - setGravity(int gravity, int xOffset, int yOffset)：设置Toast的位置和偏移量
 	- 偏移量是相对应当前设置的位置来加减（单位是dp）

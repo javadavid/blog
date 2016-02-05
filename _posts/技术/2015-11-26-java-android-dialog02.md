@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###自定义对话框基本用法
+### 自定义对话框基本用法
 
 1. 构造一个子控件
 2. 使用setView(View v)：来设置到AlertDialog.Bulider中。
@@ -102,7 +102,7 @@ MainActivity：
 
 ![android_dialog04.PNG]({{site.baseurl}}/public/img/android_dialog04.png)
 
-###进度对话框(ProcessDialog)
+### 进度对话框(ProcessDialog)
 
 	public class MainActivity extends Activity {
 		private ImageView imgView;

@@ -18,7 +18,7 @@ tags:
 
 	<activity android:name=".B_Activty" android:label="这个是第二个页面"/>
 
-####**1、关于activity之间的传值**
+#### **1、关于activity之间的传值**
 
 - 直接通过intent对象，一般只传递一些比较简单的数据；intent对象存在于各个组件(component)之间，通过构造Intent(Context packageContext, Class<?> cls)实例化，使用startActivity(Intent)启动传递；
 
@@ -73,7 +73,7 @@ tags:
 		firstView.setText(myapp.appInfo.get("sex")+"\n"+myapp.appInfo.get("age"));
 关于application：android默认启动时候会产生一个app对象，既一个单例的对象进程，所有的数据在程序中是共享的，则可以在各个activity中访问和改变；
 
-####**2、取得activity的返回值**
+#### **2、取得activity的返回值**
 
 - 通过startActivityForResult(Intent intent, int requestCode)提交到相应的activity，t相应的activity通过setResult(int resultCode, Intent data)。最后通过重载onActivityResult(int requestCode, int resultCode, Intent data)方法来实现回显返回的值
 		

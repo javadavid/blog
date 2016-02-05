@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###实例一：
+### 实例一：
 实现左右移动ViewPager滑块，自动更换标题HorizontalScrollView列表实现；
 
 初始化总布局文件activity_main.xml，实现顶部和底部的控件布局；
@@ -263,7 +263,7 @@ MainActivity.java：
 
 ![android_viewpager03.png]({{site.baseurl}}/public/img/android_viewpager03.png)
 
-###实例二：
+### 实例二：
 通过ListFragment实现ViewPager数据的填充，对support中包的各个控件使用；
 
 ContentFragment：继承support包中的 ListFragment，实现onCreate、onCreateView、onDestroyView、onDestroy：Fragment控件和FragmentItem的创建和销毁的方法；onCreate负责初始化数据源，onActivityCreated负责将数据源设置到adapter中；

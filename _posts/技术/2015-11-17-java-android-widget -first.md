@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-##解释
+## 解释
 
 >adapter是用来实现控件的数据列表的一个接口；
 
@@ -37,7 +37,7 @@ SimpleAdapter构造：
 	SimpleAdapter(Context context, List<? extends Map<String,?>> data, int resource, String[] from, int[] to) 
 
 
-###代码实现：
+### 代码实现：
 
 说明：通过声明数据对象类型，并且构造adapter（将item layout布局文件和数据键值对放进去），最后将adapter放到空间adapter中；
 

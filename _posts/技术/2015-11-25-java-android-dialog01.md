@@ -8,11 +8,11 @@ tags:
 - Android
 ---
 
-###作用：
+### 作用：
 
 用于显示对话框（多选，单选，确认对话框等自定义对话框）
 
-###继承关系：
+### 继承关系：
 	
 	java.lang.Object
   		android.app.Dialog	//对话框的基本类
@@ -20,7 +20,7 @@ tags:
 
 
 
-###代码（确认对话，单选，多选）
+### 代码（确认对话，单选，多选）
 
 	public class MainActivity extends Activity {
 		private Dialog dialog;
@@ -159,7 +159,7 @@ strings.xml:配置可以用来配置Color、字体的列表
 ![android_dialog03.PNG]({{site.baseurl}}/public/img/android_dialog03.png)
 
 
-###代码说明(个人理解)
+### 代码说明(个人理解)
 
 1. 使用AlertDialog.Builder静态内部类构造Dialog的各种属性
 	- setCancelable(boolean cancelable)：设置点击背景是否将对话框关闭
@@ -175,7 +175,7 @@ strings.xml:配置可以用来配置Color、字体的列表
 5. 在AlertDialog.Builder需要传递的是this对象的Context，具体可以参看以下
 
 
-###getApplicationContext和this对象的比较
+### getApplicationContext和this对象的比较
 
 - getApplicationContext:实际上返回的就只有系统启动时候传送过来的Context
 	

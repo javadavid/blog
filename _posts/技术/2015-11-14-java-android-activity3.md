@@ -12,7 +12,7 @@ tags:
 ## 解释	
 任务：用来保存activity组件实例(既android应用程序容器)，将activity事例保存在内存中，这个内存结构是退回栈，启动时候就产生一个MainActivity放入其中。有先进后出的原则；
 
-###获取task信息
+### 获取task信息
 android.app.ActivityManager：系统服务组件管理器
 
 	//取得系统的Activity_Task信息
@@ -43,7 +43,7 @@ AndroidManifest.xml:配置需要配置权限
 - activity会产生叠加的效果，产生一个堆栈空间
 - 点击返回到前一个activity，消亡当前activity
 
-###隐式调用Activity
+### 隐式调用Activity
 
 隐式调用不同任务的Activity（前台与后台 的关系）
 
@@ -71,37 +71,37 @@ java class 需要通过隐式声明Intent的方法启动任务
 
 
 
-###**运行模式：**AndroidManifest.xml中 android:launchMode
+### **运行模式：**AndroidManifest.xml中 android:launchMode
 	
-####standard
+#### standard
 
->####标准模式，默认，通常的堆栈模式；
+>#### 标准模式，默认，通常的堆栈模式；
 
 
-####singleTop
+#### singleTop
 
->####启动相应的任务activity如果不存在栈顶，则创建一个新的activity放到自己的栈顶，存在则不用创建，然后将这个Activity复制放到本地栈中；
+>#### 启动相应的任务activity如果不存在栈顶，则创建一个新的activity放到自己的栈顶，存在则不用创建，然后将这个Activity复制放到本地栈中；
 >
->####个人理解成：始终都是合理利用资源拿来用的类型，总是在栈顶寻找对象，比较死板；
+>#### 个人理解成：始终都是合理利用资源拿来用的类型，总是在栈顶寻找对象，比较死板；
 
 
 
-####singleTask
+#### singleTask
 
->####启动相应的任务的activity	
+>#### 启动相应的任务的activity	
 >
->####若存在，将启动任务中的activity对象的堆栈上面的activity进行抛出，不将启动activity放到本地中
+>#### 若存在，将启动任务中的activity对象的堆栈上面的activity进行抛出，不将启动activity放到本地中
 >
->####若不存在，则在则创建一个在启动activity上面；
+>#### 若不存在，则在则创建一个在启动activity上面；
 
->####个人理解成：每次启动activity对象也是会去找有没有对象，不同的是在调用task中全断搜索，然后抛出没用的在上面的activity，比较灵活；
+>#### 个人理解成：每次启动activity对象也是会去找有没有对象，不同的是在调用task中全断搜索，然后抛出没用的在上面的activity，比较灵活；
 
 
-####singleInstance
+#### singleInstance
 
->####单独创建一个任务放入activity: 此activity启动后的任务会放到原来的任务中，既只能存放此单例的任务只能放一个启动activity，销毁后会回到原始调用的task
+>#### 单独创建一个任务放入activity: 此activity启动后的任务会放到原来的任务中，既只能存放此单例的任务只能放一个启动activity，销毁后会回到原始调用的task
 
->####个人理解成：总是把调用的activity放到个临时的task中，调用完后恢复到原始返回流程，比较任性；
+>#### 个人理解成：总是把调用的activity放到个临时的task中，调用完后恢复到原始返回流程，比较任性；
 
 关于四种模式的简图我直接放上了。 可能理解还有些错误或者不深刻，慢慢消化
 

@@ -17,7 +17,7 @@ tags:
 				  android.widget.AbsListView
 					  android.widget.ListView
 
-###监听事件
+### 监听事件
 
 - setOnScrollListener：监听滚动事件；
 
@@ -64,7 +64,7 @@ tags:
 		}
 	});
 
-###状态变化
+### 状态变化
 **程序启动：**首先会执行初始化 执行onScroll()
 
 ![android_listview_scroll01]({{site.baseurl}}/public/img/android_listview_scroll01.png)
@@ -88,14 +88,14 @@ tags:
 
 ----------
 
-###修改例子
+### 修改例子
 
 关于上一节中的新闻列表中添加滚动事件的例子
 
 ![android_new03.PNG]({{site.baseurl}}/public/img/android_new03.png)
 
 
-####添加相关的滚动事件
+#### 添加相关的滚动事件
 
 >当数据没有正在加载或滚动到底部，并且处于停止状态时候；
 
@@ -216,7 +216,7 @@ tags:
 
 
 
-####改变载入进度的显示方式
+#### 改变载入进度的显示方式
 
 main布局文件：
 

@@ -9,14 +9,14 @@ tags:
 ---
 
 
-##Menu控件主要有三种
+## Menu控件主要有三种
 
 - ContextMenu：长按控件（例如ListView）出现的列表框
 - OptionsItem：系统Menu菜单创建的菜单
 - PopupMenu：根据点击的对象定位，显示Menu列表框出现的位置
 
 
-###ContextMenu
+### ContextMenu
 
 运行如下图显示
 
@@ -32,7 +32,7 @@ tags:
 - onContextItemSelected(MenuItem item)：点击菜单Item发生的事件
 	- MenuItem item：上下文本菜单的对象
 
-####代码(ListView_ContextMenu)
+#### 代码(ListView_ContextMenu)
 
 **menu.xml文件：**
 
@@ -111,20 +111,20 @@ tags:
 		}
 	}
 
-####具体步骤
+#### 具体步骤
 
 1. 在activity的onCreate(...)方法中为一个view注册上下文菜单
 2. 在onCreateContextMenuInfo(...)中生成上下文菜单。
 3. 在onContextItemSelected(...)中响应上下文菜单项。
 
 
-####ContextMenu总结
+#### ContextMenu总结
 在ListView中的操作实际上是对其中的List的操作一样； 
 
 ![android_contextmenu02.PNG]({{site.baseurl}}/public/img/android_contextmenu02.png)
 
 
-###OptionsItem
+### OptionsItem
 - onCreateOptionsMenu(Menu menu)：创建的事件，通过getMenuInflater().inflate(R.menu.main, menu)来反射Item的对象
 - onOptionsItemSelected(MenuItem item)：通过对各个Item的对象判断，触发Item的点击事件
 
@@ -132,14 +132,14 @@ tags:
 
 
 
-###PopupMenu
+### PopupMenu
 - 通过PopupMenu(Context context, View anchor)实例化Menu控件，getMenuInflater().inflate(R.menu.main,popm.getMenu())进行反射
 - setOnMenuItemClickListener(OnMenuItemClickListener listener)：触发MenuItem的点击事件
 
 ![android_menu02.PNG]({{site.baseurl}}/public/img/android_menu02.png)
 
 
-####OptionsItem/PopupMenu具体代码
+#### OptionsItem/PopupMenu具体代码
 
 **main.xml(Item 列表)：**
 

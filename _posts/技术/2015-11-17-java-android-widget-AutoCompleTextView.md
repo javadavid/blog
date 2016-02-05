@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-##解释
+## 解释
 >AutoCompleteTextView: 用来显示提示信息的控件
 
 继承关系如下：继承于TextView - EditText
@@ -21,7 +21,7 @@ tags:
 
 其中监听的方法：
 
-##事件	
+## 事件	
 1. 点击item发生的事件
 		
 		actView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,7 +74,7 @@ tags:
 
 
 
-###实例
+### 实例
 
 下面利用afterTextChanged查找字符串；详细项目ListView01
 
