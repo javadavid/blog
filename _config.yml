@@ -1,6 +1,6 @@
 permalink: /:year/:month/:day/:title.html
 paginate: 10
-markdown: rdiscount
+markdown: kramdown
 
 # 作者信息
 author: 
