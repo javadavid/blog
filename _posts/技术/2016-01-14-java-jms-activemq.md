@@ -8,7 +8,7 @@ tags:
 - 框架
 ---
 
-###JMS
+### JMS
 
 - Java Messaging Service 消息队列
 - 属于一种中间件(MOM)
@@ -16,7 +16,7 @@ tags:
 - 不需要 生产者 消费者 同时运行
 
 
-###对象模型：
+### 对象模型：
 
 - 连接工厂（ConnectionFactory）：管理员创建，绑定到连接池中，可以通过其创建JMS连接
 - JSM连接（Connection）：客户端和服务端的活动连接，客户端（程序）调用工厂创建
@@ -28,13 +28,13 @@ tags:
 
 ![JMS模型]({{site.baseurl}}/public/img/java_jms_module.png)
 
-###发送的类型
+### 发送的类型
 
 - 点对点（Point-to-Point）：一个生产者 --> 一个消费者
 - 发布/订阅（Publish/Subscribe）广播：一个生产者 --> 多个消费者
 
 
-###ActiveMQ
+### ActiveMQ
 
 是Apache提供的开源的一个消息列表组件
 apache-activemq-5.5.1下载运行服务器 管理的 连接管道的地址在conf文件中
@@ -201,3 +201,4 @@ ConnectionFactory -> Connection连接后 -> Session -> Destination 和 创建生
 参考
 
 百度百科 和 http://www.cnblogs.com/xwdreamer/archive/2012/02/21/2360818.html
+
