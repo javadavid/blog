@@ -8,10 +8,11 @@ tags:
 - Android
 ---
 
-#### Service 进程间的通信（AIDL）
+### Service 进程间的通信（AIDL）
 不同的android进程中无法共享内存，aidl则提供了进程间的通信接口机制，可以调用外部应用程序提供的数据接口 （与webservice机制感觉差不多，需要服务端和客户端之间通信）
 
-服务端：
+#### 服务端：
+
 1. 定义一个aidl文件 CalculateInterface.aidl
 	
 	package com.example.aidl； 
@@ -33,16 +34,16 @@ tags:
 - onTransact：主要作用是将接口方法中的传入传出参数类型和值 读取和写入到Parcel中；（服务端通过transact方法调用）
 	
 		case TRANSACTION_doCalculate: {
-				data.enforceInterface(DESCRIPTOR);
-				double _arg0;
-				_arg0 = data.readDouble();
-				double _arg1;
-				_arg1 = data.readDouble();
-				double _result = this.doCalculate(_arg0, _arg1);
-				reply.writeNoException();
-				reply.writeDouble(_result);
-				return true;
-			}
+			data.enforceInterface(DESCRIPTOR);
+			double _arg0;
+			_arg0 = data.readDouble();
+			double _arg1;
+			_arg1 = data.readDouble();
+			double _result = this.doCalculate(_arg0, _arg1);
+			reply.writeNoException();
+			reply.writeDouble(_result);
+			return true;
+		}
 
 - asBinder：用于给代理类调用返回正确的binder对象；
 
@@ -69,12 +70,15 @@ tags:
 3. 静态声明service配置文件
 
 		<service android:name="com.example.aidl.server.CalculateServer">
-	            <intent-filter>
-	                <action android:name="com.example.aidl.server.CalculateServer"/>
-	            </intent-filter>
-	        </service>
+		  <intent-filter>
+		      <action android:name="com.example.aidl.server.CalculateServer"/>
+		  </intent-filter>
+		</service>
 
-服务端:需要同样的aidl文件，与绑定本地服务相似，只不过是隐式声明后的调用绑定
+#### 客户端:
+
+需要同样的aidl文件，与绑定本地服务相似，只不过是隐式声明后的调用绑定
+
 > ServiceConnection连接取得服务 - 启动定义意图  - 绑定后调用服务内容/方法接口
 
 	public class MainActivity extends Activity {
