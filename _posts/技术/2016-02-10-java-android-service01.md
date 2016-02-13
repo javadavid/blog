@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Android Service 学习"
+title:  "Android Service 学习(1)"
 date: 2016/2/10 10:02:46 
 categories:
 - 技术
@@ -304,6 +304,10 @@ config.java 配置信息文件
 上述例子 当拖动滚动条时候存在进度条的监听广播，所以会造成卡顿的现象；
 解决方法：在开始拖动SeekBar取消注册；停止后恢复注册progressReceiver
 
+MediaPlayer生命周期：
+
+![android_service.png](http://dl.iteye.com/upload/picture/pic/71458/c6e1ec01-5320-3483-9e0b-6c6f53419880.gif)
+
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		// TODO 拖动结束的事件
@@ -595,4 +599,195 @@ service组件 MyMediaPlayer.java
 
 
 ![android_service03.png]({{site.baseurl}}/public/img/android_service03.png)
+
+#### Service绑定事件(onBind)
+实现Service组件和Activity组件的绑定，绑定的Activity可以使用Service中的功能性方法；绑定的Service组件的生命周期随着Activity的变化；
+
+- 创建Service子类，重写绑定操作的相关方法onCreate() - onBind()/返回Binder对象 - onUnBind()/返回值是true则解除绑定，否则不解除绑定 - onReBind() - onDestroy()
+- 注册Service到manifest文件中
+- Activity绑定组件中的通信接口对象（ServiceConnection接口）；
+- Activity中绑定(bindService)或者解绑(unBindService)Service
+
+布局activity_main.xml：
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="startService" 
+        android:onClick="startService" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stopService" 
+        android:onClick="stopService" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bindService" 
+        android:onClick="bindService"/>
+	<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="unBindService" 
+        android:onClick="unBindService" />
+	</LinearLayout>
+
+TimerService.java：service组件 
+
+- 覆写生命周期的方法 启动服务、绑定、取消绑定（重新绑定）、销毁服务 ；
+- 定义返回继承Binder对象TimerBinder
+- 其中TimerBinder中定义调用方法；这里使用通知（Notification），绑定相应的Timer任务；
+- 实例化返回给方法onBind(Intent intent)
+
+<nobr/>
+
+	public class TimerService extends Service {
+
+		private Timer timer;	//定时工具
+		
+		private NotificationManager notifiyManager;
+		
+		@Override
+		public void onCreate() {
+			// TODO Auto-generated method stub
+			super.onCreate();
+			Log.i("info", " -- onCreate -- ");
+			timer = new Timer();
+			notifiyManager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		}
+		
+		@Override
+		public IBinder onBind(Intent intent) {
+			// TODO 绑定方法；
+			Log.i("info", " -- onBind -- ");
+			return new TimerBinder();
+		}
+		
+		@Override
+		public boolean onUnbind(Intent intent) {
+			// TODO 解除绑定
+			Log.i("info", " -- onUnbind -- ");
+			return super.onUnbind(intent);
+		}
+		
+		@Override
+		public void onRebind(Intent intent) {
+			// TODO 重新绑定
+			super.onRebind(intent);
+			Log.i("info", " -- onRebind -- ");
+		}
+		
+		@Override
+		public void onDestroy() {
+			// TODO Auto-generated method stub
+			super.onDestroy();
+			Log.i("info", " -- onDestroy -- ");
+			timer.cancel();timer=null;
+		}
+		
+		//IBinder的子类，向Activity提供功能性方法；
+		class TimerBinder extends Binder{
+			//启动定时任务
+			void startTimer(final String info , long ms){
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						//显示通知
+						NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+						
+						builder.setSmallIcon(R.drawable.ic_launcher)
+								.setContentTitle("定时提醒")
+								.setContentText(info)
+								.setTicker(info)
+								.setDefaults(Notification.DEFAULT_SOUND);
+						notifiyManager.notify(0, builder.build());
+					}
+				}, ms ,10*1000);
+			}
+			
+			void stopTimer(){
+				timer.cancel();
+			}
+		}
+	}
+
+
+MainActivity.java：	
+
+- 覆写ServiceConnection类中的连接成功（onServiceDisconnected）和连接不成功方法（onServiceConnected）；
+- 初始 onCreate 实例化timerIntent对象 
+- startService()负责启动 TimerService 中的 onCreate 启动服务
+- bindService()负责启动 TimerService 中的 onBind绑定服务；通过Context.bindService(Intent,ServiceConnection,flag)方法传入意图路径，连接状态管理，操作绑定参数
+- unBindService()负责 TimerService 中的 onUnbind 取消绑定服务
+- stopService()负责 TimerService 中的 销毁服务
+	
+<nobr/>
+
+	public class MainActivity extends Activity {
+	
+		//用来监控Service状态的回调方法、连接Service状态；
+		private ServiceConnection sconnection = new ServiceConnection() {
+			
+			@Override
+			public void onServiceDisconnected(ComponentName name) {
+				// TODO 系统崩溃时候断开服务连接
+				Log.i("info", "-- onServiceDisconnected --");
+				
+			}
+			
+			@Override
+			public void onServiceConnected(ComponentName name, IBinder service) {
+				// TODO 绑定组件连接成功
+				Log.i("info", "-- onServiceConnected --");
+				tBinder =(TimerBinder) service;
+				tBinder.startTimer("时间到了。", 5*1000);
+			}
+		};
+		private Intent timerIntent;
+		private TimerBinder tBinder;
+	    
+		@Override
+	    protected void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.activity_main);
+	        
+	        timerIntent=new Intent(getApplicationContext(),TimerService.class);
+	        
+	    }
+	
+	    public void bindService(View v){
+	    	//绑定服务
+	    	bindService(timerIntent, sconnection, BIND_AUTO_CREATE);
+	    }
+	
+	    public void unBindService(View v){
+	    	if(tBinder!=null){
+	    		tBinder.stopTimer();
+	    		tBinder=null;
+	    		unbindService(sconnection);
+	    	}
+	    }
+	    
+	    public void startService(View v){
+	    	startService(timerIntent);
+	    }
+	    
+	    public void stopService(View v){
+	    	stopService(timerIntent);
+	    }
+	}
+
+![android_service04.png]({{site.baseurl}}/public/img/android_service04.png)
+
+
+可以看出 对于Service中的onBind和onUnbind方法；onBind调用时会自动Service创建，onUnbind则会自动对Service销毁。
+
+-  Service绑定的生命周期中  从创建到绑定和解除绑定 **都只有一次**
+-  而在执行的生命周期中  **创建销毁是一次，StartCommand执行可以是多次** 
 

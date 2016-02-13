@@ -2,6 +2,7 @@ permalink: /:year/:month/:day/:title.html
 paginate: 10
 markdown: kramdown
 timezone: Asia/Shanghai
+relative_permalinks: true
 
 # 作者信息
 author: 
