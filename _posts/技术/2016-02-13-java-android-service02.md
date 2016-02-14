@@ -15,10 +15,10 @@ tags:
 
 1. 定义一个aidl文件 CalculateInterface.aidl
 	
-	package com.example.aidl； 
-	interface CalculateInterface {
-		double doCalculate(double a, double b);
-	}
+		package com.example.aidl； 
+		interface CalculateInterface {
+			double doCalculate(double a, double b);
+		}
 	
 在gen中会生成相应的CalculateInterface.java文件，定义方法如下：
 
@@ -157,4 +157,166 @@ tags:
 	</LinearLayout>
 
 ![android_service06.png]({{site.baseurl}}/public/img/android_service06.png)
+
+
+### 使用信使（Messenger）实现IPC通信；
+- 服务端
+	- 定义Handler取得client准备的数据源
+	- 定义Messenger封装handler对象
+	- 返回绑定服务的IBinder对象（messenger.getBinder）
+- 客户端
+	- 通过普通的绑定隐式服务，连接成功得到的服务Binder对象
+	- 声明实例化Messenger绑定包装服务
+	- 信使Messeger发送Message对象到服务（其中对象发送的对象需要实现了Parcelable接口）
+
+#### 服务端：
+
+	public class PrintService extends Service {
+	
+		private Handler handler = new Handler(){
+			public void handleMessage(android.os.Message msg) {
+				switch (msg.what) {
+				case 0:
+					Log.i("info","正在打印文本 " + msg.getData().getString("txt"));
+					break;
+				case 1:
+					Log.i("info", "正在打印图片 " + msg.getData().getByteArray("bitmap") );
+				default:
+					break;
+				}
+			};
+		};
+		
+		private Messenger messenger = new Messenger(handler);
+		
+		
+		@Override
+		public IBinder onBind(Intent intent) {
+			// TODO Auto-generated method stub
+			return messenger.getBinder();
+		}
+	
+	}
+
+声明服务：
+
+	<service android:name="com.example.service05_messenger_server.PrintService">
+	  <intent-filter>
+	      <action android:name="com.example.service05_messenger.PrintService" />
+	  </intent-filter>
+	</service>
+
+#### 客户端：
+
+	public class MainActivity extends Activity {
+	
+		private Messenger messager;
+		
+		private ServiceConnection sConnection = new ServiceConnection() {
+			
+			@Override
+			public void onServiceDisconnected(ComponentName name) {
+				
+			}
+			
+			@Override
+			public void onServiceConnected(ComponentName name, IBinder service) {
+				Toast.makeText(getApplicationContext(), "连接打印机成功", 0).show();
+				messager = new Messenger(service);
+			}
+		};
+		
+	    @Override
+	    protected void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.activity_main);
+	    }
+	    
+	    public void connectPrint(View v){
+	    	//绑定服务;
+	    	bindService(new Intent("com.example.service05_messenger.PrintService"), sConnection, BIND_AUTO_CREATE);
+	    }
+	    
+	    public void printImg(View v){
+	    	if(!checkIsConnect()){
+	    		return ;
+	    	}
+	    	Message msg = Message.obtain();
+	    	msg.what = 0;
+	    	Bundle data = new Bundle();
+	    	data.putString("txt", "这个是文本对象");
+	    	msg.setData(data);
+	    	
+	    	//msg.obj = "我是文本对象";
+	    	try {
+				messager.send(msg);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+	    }
+	    
+	    public void printText(View v){
+	    	if(!checkIsConnect()){
+	    		return ;
+	    	}
+	    	Message msg = Message.obtain();
+	    	msg.what = 1;
+	    	Bundle data = new Bundle() ;
+	    	data.putByteArray("bitmap",new byte[(int) Math.random()*1024]);
+	    	msg.setData(data);
+	    	
+	    	//使用信使Messager 就不能使用obj传递Object，因为其没有实现Pracelable接口,Bundle则有实现
+	    	//msg.obj = new byte[(int)Math.random()*1024];
+	    	try {
+				messager.send(msg);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+	    }
+	    
+	    public boolean checkIsConnect(){
+	    	if(messager==null){
+	    		Toast.makeText(getApplicationContext(), "当前没有连接打印机", 0).show();
+	    		return false;
+	    	}
+	    	return true;
+	    }
+	    
+	    @Override
+	    protected void onDestroy() {
+	    	unbindService(sConnection);
+	    	super.onDestroy();
+	    }
+	}
+
+布局文件:
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    tools:context=".MainActivity">
+	    <Button
+	        android:onClick="connectPrint"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="连接打印机" />
+		<Button
+	        android:onClick="printImg"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="打印图片" />
+		<Button
+	        android:onClick="printText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="打印文本" />
+	</LinearLayout>
+
+![android_service07.png]({{site.baseurl}}/public/img/android_service07.png)
+
+两种进程间通信实现，其中权限的定义一样可以在manifest中定义；
+
+
 

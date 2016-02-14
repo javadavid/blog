@@ -10,7 +10,7 @@ tags:
 
 这一章其实应该在ActionBar前面一章的；嘛不过无所谓了。
 
-###Loader
+### Loader
 自动的异步加载数据的作用；
 
 - 支持Activity和Fragment 
@@ -139,3 +139,4 @@ MainActivity.java实现接口LoaderCallbacks 进行方法回调
 	}
 
 ![android_loader01.png]({{site.baseurl}}/public/img/android_loader01.png)
+

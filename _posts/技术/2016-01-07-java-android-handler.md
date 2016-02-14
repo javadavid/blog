@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###Handler
+### Handler
 
 起到线程之间的通信作用的类；比如主线程和子线程间 
 
@@ -19,7 +19,7 @@ tags:
 - 对于线程的分发执行方法dispatchMessage(Message msg)；
 	- 其中msg：绑定了调用方target 和 回调callback
 
-####子线程向主线程通信 sendMessage(Message msg)方式
+#### 子线程向主线程通信 sendMessage(Message msg)方式
 
 布局文件：activity_main.xml
 
@@ -97,9 +97,10 @@ MainActivity.java：
 
 ![android_handler01.png]({{site.baseurl}}/public/img/android_handler01.png)
 
-####子线程向主线程通信 sendEmptyMessage(int what)方式
+#### 子线程向主线程通信 sendEmptyMessage(int what)方式
 
-实际上和上面的sendMessage一样，都是调用的 **sendMessageDelayed(Message msg, long delayMillis)**
+实际上和上面的sendMessage一样，都是调用的
+**sendMessageDelayed(Message msg, long delayMillis)**
 
 布局文件 activity_main.xml：
 
@@ -192,7 +193,7 @@ MainActivity.java：通过方法 sendEmptyMessage(int what) 发送个Handler主�
 	}
 
 
-####子线程向主线程通信 Handler.post(Runnable r) 方式
+#### 子线程向主线程通信 Handler.post(Runnable r) 方式
 
 MainActivity.java 子线程代码块 ： 向主线程发送一个线程代码块（此代码块在主线程执行）
 
@@ -216,7 +217,7 @@ MainActivity.java 子线程代码块 ： 向主线程发送一个线程代码块
 ![android_handler02.png]({{site.baseurl}}/public/img/android_handler02.png)
 
 
-####主线程向子线程通信
+#### 主线程向子线程通信
 
 MainActivity.java：
 
@@ -260,3 +261,5 @@ MainActivity.java：
 	}
 
 ![android_handler03.png]({{site.baseurl}}/public/img/android_handler03.png)
+
+
