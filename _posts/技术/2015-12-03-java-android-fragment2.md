@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###Fragment的生命周期
+### Fragment的生命周期
 
 Activity创建：
 
@@ -58,3 +58,5 @@ Activity和Fragment生命周期对比
 停止和销毁的运行状态：
 
 ![android_fragment05.png]({{site.baseurl}}/public/img/android_fragment05.png)
+
+

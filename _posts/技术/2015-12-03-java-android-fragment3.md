@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###LinkList动态添加Fragment碎片
+### LinkList动态添加Fragment碎片
 
 Fragment，activity_main.xml：
 
@@ -139,7 +139,7 @@ MainActivity的按钮事件：
 
 
 
-###系统回退栈 动态添加Fragment碎片
+### 系统回退栈 动态添加Fragment碎片
 
 Fragment的实例化都是一样的，参考上面代码
 
@@ -349,4 +349,6 @@ ContentFragment.java
 
 
 由于我本机模拟器版本的问题，无法横屏，所以这个就自己使用真机运行吧，就不截图了。
+
+
 

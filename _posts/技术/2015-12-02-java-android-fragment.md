@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-##Fragment作用和创建
+## Fragment作用和创建
 
 主要用于布局文件的复用
 
@@ -76,7 +76,7 @@ activity_main.xml： fragment节点下通过name关联相应的布局
 ![android_fragment01]({{site.baseurl}}/public/img/android_fragment01.png)
 
 
-##关于Fragment取得控件
+## 关于Fragment取得控件
 1. 公用了一次的Fragment主布局中可以直接通过findViewById取得其中控件)(上面的实例)
 2. 公用多次的Fragment 通过FragmentManager取得Fragment --> View -->控件
 3. 若是要在控件上添加事件，则主布局的优先级高于Fragment布局，会将其覆盖
@@ -130,7 +130,7 @@ MainActivity主布局中：
 
 ![android_fragment02]({{site.baseurl}}/public/img/android_fragment02.png) 
 
-##关于Fragment设置控件和传值
+## 关于Fragment设置控件和传值
 
 在activity_main中：设置存放fragment的占位符
 
@@ -219,6 +219,8 @@ LeftFragment：取得fragment模版，通过getArguments()取得MainActivity传�
 如图显示：点击按钮可替换中间的fragment，并且fragment可以取得传递过来的值
 
 ![android_fragment03.png]({{site.baseurl}}/public/img/android_fragment03.png)
+
+
 
 
 

@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###ActionBar
+### ActionBar
 显示窗体的标题栏，提供导航功能；在3.0以后用来替代tittle bar和menu。
 
 定义的图标在main.xml中;showAsAction中的选择项
@@ -147,7 +147,7 @@ activity节点中：android:uiOptions="splitActionBarWhenNarrow"：启动分离�
 
 ![android_actionbar02.png]({{site.baseurl}}/public/img/android_actionbar02.png)
 
-###ActionBar SearchView （ActionBar02）
+### ActionBar SearchView （ActionBar02）
 使用搜索框(searchView)，通过LoaderManager.LoaderCallbacks<Cursor>异步加载联系人查询信息
 
 创建Main和Item的布局文件、和menu中的main.xml的search节点信息
@@ -278,7 +278,7 @@ MainActivity.java:实现接口LoaderCallbacks<Cursor>
 ![android_actionbar03.png]({{site.baseurl}}/public/img/android_actionbar03.png)
 
 
-###ActionBar Tab （ActionBar02）
+### ActionBar Tab （ActionBar02）
 
 布局文件：
 
@@ -408,3 +408,4 @@ ContentFragment.java：
 
 
 ![android_actionbar04.png]({{site.baseurl}}/public/img/android_actionbar04.png)
+

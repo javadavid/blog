@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Android Service 学习(2)"
+title:  "Android Service 学习(2) - 不同进程间的通信"
 date: 2016/2/13 14:09:55 
 categories:
 - 技术
@@ -316,7 +316,44 @@ tags:
 
 ![android_service07.png]({{site.baseurl}}/public/img/android_service07.png)
 
-两种进程间通信实现，其中权限的定义一样可以在manifest中定义；
+两种进程间通信实现，其中权限的定义一样可以在manifest中定义
 
+- aidl是通过服务取得对数据源处理的结果、是双向的
+- 第二种Messenger发送 是客户端像服务端进行连接，服务端应答
+	- 若要实现客户端应答，则需要在客户端进行handler接收Messenger处理
+	- 客户端：声明一个返回的信使管道 通过 msg.replyTo = replayMessenger;将信使封装到消息中一同发送
+ 	
+			//handle接受信使
+			private Handler mHandle = new Handler(){
+				public void handleMessage(Message msg) {
+					Log.i("info", "客户端接收的数据：" + msg.getData().getString("msg"));
+				};
+			};
+			
+			//回传的信使
+			private Messenger replayMessenger = new Messenger(mHandle);//handle接受信使
+			private Handler mHandle = new Handler(){
+				public void handleMessage(Message msg) {
+					Log.i("info", "客户端接收的数据：" + msg.getData().getString("msg"));
+				};
+			};
+			
+			//回传的信使
+			private Messenger replayMessenger = new Messenger(mHandle);
 
+	- 服务端：处理消息后返回给客户端一个消息
+
+			Message replayMsg = Message.obtain();
+			Bundle data = new Bundle();
+			data.putString("msg", "我是Service返回的数据");
+			replayMsg.setData(data);
+	
+			//取得客户端的发送信使 从服务端在发送给客户端；
+			try {
+				msg.replyTo.send(replayMsg);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+
+![android_service08.png]({{site.baseurl}}/public/img/android_service08.png)
 

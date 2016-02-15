@@ -34,6 +34,7 @@ tags:
 		String name=intent.getStringExtra("mame");
 		
 - 通过intent对象打包的bundle对象传递，可以传递对象或一些复杂结构的数据等。只在activity之间传递
+		
 		//通过Intent Bundle传值
 		Bundle bundle=new Bundle();
 		bundle.putString("sex", "男");
@@ -94,3 +95,5 @@ tags:
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 		}
+
+

@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-##Storage的分类
+## Storage的分类
  
 - Shared Preferences：共享存储，原始的键值对；
 - Internal Storage：内部存储
@@ -17,7 +17,7 @@ tags:
 - Network Connection：网络
 
 
-###Shared Preferences
+### Shared Preferences
 - 写操作：通过 getSharedPreferences(String name,int mode)传入引用的名称和存储的类型，返回SharedPreferences对象；通过接口SharedPreferences.Editor的put方法设置值提交
 
 		public void write(View view){
@@ -47,7 +47,7 @@ tags:
 	![android_storage02.png]({{site.baseurl}}/public/img/android_storage02.png)
 
 
-####Shared Preferences应用（延伸 Storage01）
+#### Shared Preferences应用（延伸 Storage01）
 
 MainActivity：设置文字的属性后，按退出后重启依然保存内容
 
@@ -130,7 +130,7 @@ MainActivity：设置文字的属性后，按退出后重启依然保存内容
 ![android_storage03.png]({{site.baseurl}}/public/img/android_storage03.png)
 
 
-###Internal Storage
+### Internal Storage
 
 - 通过openFileOutput(String name, int mode)打开输出流，保存文件
 - 通过openFileInput(String name)打开输入流，读取文件
@@ -216,7 +216,7 @@ MainActivity.java：
 
 ![android_storage04.png]({{site.baseurl}}/public/img/android_storage04.png)
 
-####Internal Storage应用（延伸 Storage02）
+#### Internal Storage应用（延伸 Storage02）
 
 添加Options菜单，选择后显示AlertDialog对话框，选择打开相应文件
 
@@ -298,7 +298,7 @@ MainActivity.java：
 
 ![android_storage05.png]({{site.baseurl}}/public/img/android_storage05.png)
 
-###External Storage（扩展存储）
+### External Storage（扩展存储）
 目录`"/mnt/sdcard"` 
 
 ![android_storage07.png]({{site.baseurl}}/public/img/android_storage07.png)
@@ -359,7 +359,7 @@ MainActivity.java：
 	}
 
 
-###SQLite Databases（Storage04）
+### SQLite Databases（Storage04）
 
 创建sqlite的数据库文件默认位置保存在 安装包的database目录下面
 
@@ -458,6 +458,8 @@ MainActivity.java代码：
 	}
 
 ![android_storage06.png]({{site.baseurl}}/public/img/android_storage06.png)
+
+
 
 
 

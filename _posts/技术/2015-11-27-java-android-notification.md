@@ -134,9 +134,12 @@ when) ：过时的方法
 ![android_notification04.png]({{site.baseurl}}/public/img/android_notification04.png)
 
 ## 说明
-- setOngoing(boolean ongoing):是否一直停留在状态栏	若是false:点击Clear则清除
+- setOngoing(boolean ongoing):是否一直停留在状态栏,若是false:点击Clear则清除
 - setAutoCancel(boolean autoCancel)：消息栏点击后消失
-- setDefaults(int defaults)：设置默认的提示信息。如：(Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE)响铃和震动
+- setDefaults(int defaults)：设置默认的提示信息。如：
+```
+(Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE)
+```响铃和震动
 - setContentIntent(PendingIntent intent)：设置默认点击的intent跳转
 	- PendingIntent是Intend的一个包装，即将执行的Intent，通过静态方法getActivity(Context context, int requestCode, Intent intent, int flags)实现调用
 - setProgress(int max, int progress, boolean indeterminate)：显示滚动条的进度，indeterminate参数表示是否是不确定性进度条
@@ -148,6 +151,8 @@ when) ：过时的方法
 	- addLine(CharSequence cs)：加载多条文本信息
 	- setSummaryText(CharSequence cs)：他们都是通过此方法设置备注信息
 -最后通过builder.setStyle(style)设置和builder绑定。
+
+
 
 
 

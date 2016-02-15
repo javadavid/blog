@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###ContentProvider（ContentProvider02）
+### ContentProvider（ContentProvider02）
 
 作用提供存储数据（storage）的对外接口，以便于统一格式实现数据共享和读取；
 
@@ -109,7 +109,7 @@ AndroidManifest.xml配置：配置相关的标识、权限等。
         android:exported="true"/>
 
 
-###ContentResolver（ContentResolver01_02）
+### ContentResolver（ContentResolver01_02）
 
 对外接口的访问的实现类：使用getContentResolver实例化ContentResolver，然后查询得到游标，循环出数据列表；
 
@@ -147,5 +147,7 @@ AndroidManifest.xml配置：配置相关的标识、权限等。
 	}
 
 ![android_provider01.png]({{site.baseurl}}/public/img/android_provider01.png)
+
+
 
 

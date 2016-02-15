@@ -8,7 +8,7 @@ tags:
 - Android
 ---
 
-###ContentProvider存储电话记录的位置（URI）
+### ContentProvider存储电话记录的位置（URI）
 
 原始数据的存储位置：com.android.providers.contacts  
 提供的对外接口：com.android.contacts
@@ -61,7 +61,7 @@ Data中的常量：
 - Data.MIMETYPE：“mimetype”
 
 
-###ContactProvider和ContentResolver对电话的人员信息的增删改查（ContentResolver02）
+### ContactProvider和ContentResolver对电话的人员信息的增删改查（ContentResolver02）
 
 activity_main.xml 
 
@@ -322,3 +322,5 @@ MainActivity.java：代码有点长
 	<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
 ![android_provider03.png]({{site.baseurl}}/public/img/android_provider03.png)
+
+
