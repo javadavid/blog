@@ -10,7 +10,7 @@ tags:
 
 ### Cassandra
 
-是由apache的开源分布式NO_SQL网络存储服务，facebook人员开发；其结构类似于四、五维数组的结构，最根尾节点的键值对是 name - value - timestamp，类型是String类型，并且在写入数据之前，会记录写入日志（CommitLog），按照key-value进行存放在内存；一定条件后，最后会存储在磁盘上，存放格式是SSTable。
+是由apache的开源分布式NO_SQL网络存储服务，facebook人员开发；其结构类似于四、五维数组的结构，最根尾节点的键值对是 name - value - timestamp，并且在写入数据之前，会记录写入日志（CommitLog），按照key-value进行存放在内存；一定条件后，最后会存储在磁盘上，存放格式是SSTable。
 
 
 #### 目录结构
@@ -31,13 +31,13 @@ tags:
 
 ![cassandra-shell01]({{site.baseurl}}/public/img/cassandra-shell01.png)
 
-提示需要执行`powershell Set-ExecutionPolicy Unrestricted`
+提示需要执行`powershell Set-ExecutionPolicy Unrestricted`，赋予shell的执行权限
 
 在运行后。本地启动服务后如图所示：
 
 ![cassandra-shell02]({{site.baseurl}}/public/img/cassandra-shell02.png)
 
-连接数据源：cassandra-cli.bat
+连接数据源：启动客户端cassandra-cli.bat；
 
 ![cassandra-shell03]({{site.baseurl}}/public/img/cassandra-shell03.png)
 
@@ -86,11 +86,13 @@ tags:
 数据操作
 
 - 数据写入
+
 	> 格式：set keyspace.standard[key][columns.name] = value
 		
 		set Keyspace1.Stamdard2['studentA']['age']='18'
 
 - 读取数据
+
 	> 格式：get keyspace.standard[key]
 	
 		get Keyspace1.Stamdard2['studentA']
@@ -98,7 +100,7 @@ tags:
 		//默认返回第一行的数据
 		(column=age,value=18,timestamp=1270694041669000)
 
-#### CQL的操作和配置
+#### CQL的配置 和 数据定义/操作语句
 
 在CQL中是忽略大小写的，如 keyspace、column、table的名称。字段名称使用双引号括起来则是大小写敏感的
 
@@ -117,12 +119,15 @@ tags:
 	- propities：replication(复制策略:)、durable_writes（持久化写入conmmit log，默认是true）;
 
 - 修改keyspace
+
 	> ALTER KEYSPACE < keyspaceName > (if not exists) ? < identifier > WITH < propities > 
 
 - 删除keyspace
+
 	> DROP KEYSPACE < keyspaceName > (if exists) ? < identifier > 
 
 - 切换keyspace 
+
 	> USE < keyspaceName >
 
 - 显示keyspace信息；
@@ -148,6 +153,7 @@ tags:
 		)
 
 	- 关于< property >
+
 		> comment ：对列族信息的描述    
 		> compaction：数据压缩策略    
 		> compression：数据压缩算法   
@@ -163,6 +169,7 @@ tags:
 	![cassandra-shell06]({{site.baseurl}}/public/img/cassandra-shell06.png)
 	
 - 修改 
+
 	> ALTER TABLE < tableName > < instraction >
 
 		//1.
@@ -175,14 +182,16 @@ tags:
 		AND read_repair_chance = 0.2 ;
 
 - 删除Table
+
 	> DROP TABLE < tableName >
 
 - 清空Table
+
 	> TRUNCATE < tableName >
 
 **索引Index的操作：**
 
-- 创建
+- 创建第二索引
 
 		CREATE (CUSTOM) INDEX (IF NOT EXISTS)? (< indexName >)? 
 			ON < tableName > ( < index-indefier > ) 
@@ -191,9 +200,122 @@ tags:
 		1.
 		CREATE INDEX indexName ON tableName(columnsName);
 
-（待更）		
+		2.
+		CREATE INDEX on tableName(columnsName);
+
+		3.
+		CREATE INDEX on keySpaceName(keyName(columnsName));
 		
+		4.
+		CREATE CUSTOM INDEX on tableName(columnsName);
+		
+		5.
+		CREATE CUSTOM INDEX on tableName(columnsName) USING 'path.to.the.IndexClass';
+		
+		6.
+		CREATE CUSTOM INDEX on tableName(columnsName) USING 'path.to.the.IndexClass' WITH OPTION = {'storage':'/mnt/ssd/indexes/'};
+
+- 删除第二索引
+
+		DROP INDEX ( IF EXISTS )?( < keyspace > ) ? < identifier >
+
+		1.
+		DROP INDEX indexName;
+
+		2.
+		DROP INDEX keySpaceName.indexName;
+
+CQL的数据操作语句：Cassandra 2.2 开始，select和insert加入了JSON操作；
+
+- insert
+
+		INSERT INTO <tablename>
+		  ( ( <name-list> VALUES <value-list> )
+		  | ( JSON <string> ))
+		  ( IF NOT EXISTS )?
+		  ( USING <option> ( AND <option> )* )?
+
+
+		insert into testtable ( columnsid , age, name , sex)  values ( 1,15,'zhangsan' ,'nan') USING TTL 86400;
+		
+		INSERT INTO NerdMovies JSON '{"movie": "Serenity", "director": "Joss Whedon", "year": 2005}'
+		
+- update：
+		
+		UPDATE < tableName >
+		( USING < option > ( AND < option > )* )?
+		SET columns = 'values',...
+		WHERE columns = 'values' ( < condition > )
+		
+		UPDATE NerdMovies USING TTL 400
+		SET director = 'Joss Whedon',
+		    main_actor = 'Nathan Fillion',
+		    year = 2005
+		WHERE movie = 'Serenity';
+		
+		UPDATE UserActions SET total = total + 2 WHERE user = B70DE1D0-9908-4AE3-BE34-5573E5B09F14 AND action = 'click';
+
+- delete	：必须需要where条件
+
+		DELETE ( < selection > (',' < selection > )* )?
+	 	FROM < tableName >
+		( USING TIMESTAMP < integer > )?
+		WHERE < where-clause >
+		( IF ( EXISTS | ( < condition > ( AND < condition > )* ) ) )?
+
+		1.用于删除整行数据
+		DELETE FROM NerdMovies USING TIMESTAMP 1240003134 WHERE movie = 'Serenity';
+
+		2.用于删除列数据中的元素
+		DELETE phone FROM Users WHERE userid IN (C73DE1D3-AF08-40F3-B124-3FF3E5109F22, B70DE1D0-9908-4AE3-BE34-5573E5B09F14);
+
+
+- batch
+		
+		BEGIN ( UNLOGGED | COUNTER ) BATCH
+		( USING < option > ( AND < option > )* )?
+		< modification-stmt > ( ';' < modification-stmt > )*  
+		APPLY BATCH 
+
+		BEGIN BATCH
+		  INSERT INTO users (userid, password, name) VALUES ('user2', 'ch@ngem3b', 'second user');
+		  UPDATE users SET password = 'ps22dhds' WHERE userid = 'user3';
+		  INSERT INTO users (userid, password) VALUES ('user4', 'ch@ngem3c');
+		  DELETE name FROM users WHERE userid = 'user1';
+		APPLY BATCH;
+
+- select：查询的where条件必须是索引index
+		
+		SELECT ( JSON )? < columnsName > 
+		FROM < tableName >
+		( WHERE < where-clause > )?
+		( ORDER BY < order-by > )?
+		( LIMIT < integer > )?
+		( ALLOW FILTERING )? 
+
+
+		SELECT name, occupation FROM users WHERE userid IN (199, 200, 207);
+
+		SELECT JSON name, occupation FROM users WHERE userid = 199;
+		
+		SELECT name AS user_name, occupation AS user_occupation FROM users;
+		
+		SELECT time, value
+		FROM events
+		WHERE event_type = 'myEvent'
+		  AND time > '2011-02-03'
+		  AND time <= '2012-01-01'
+		
+		SELECT COUNT(*) FROM users;
+		
+		SELECT COUNT(*) AS user_count FROM users;
+
+
+
+
+
 参考：
 
 http://www.ibm.com/developerworks/cn/opensource/os-cn-cassandra/
 
+http://cassandra.apache.org/doc/cql3/CQL.html
