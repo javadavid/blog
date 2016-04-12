@@ -310,7 +310,41 @@ CQL的数据操作语句：Cassandra 2.2 开始，select和insert加入了JSON�
 		
 		SELECT COUNT(*) AS user_count FROM users;
 
+#### Java连接操作Cassandra
 
+首先Maven依赖
+
+	<dependency>
+         <groupId>com.datastax.cassandra</groupId>
+         <artifactId>cassandra-driver-core</artifactId>
+         <version>2.1.5</version>
+    </dependency>
+
+测试代码
+
+	//列出所有的节点、keyspace实例
+	public class App {
+		public static void main(String[] args) {
+			
+			//添加一个节点
+			Cluster cluster = Cluster.builder().addContactPoint("localhost").build();
+			
+			
+			Metadata metadata = cluster.getMetadata();
+	
+			//输出所有的host
+			for(Host host : metadata.getAllHosts()){
+				System.out.println("host :" + host.getAddress());
+			}
+			
+			//输出所有的keyspace
+			for ( KeyspaceMetadata keyspace : metadata.getKeyspaces()){
+				System.out.println("keyspace :" + keyspace.getName());
+			}
+			
+			cluster.close();
+		}
+	}
 
 
 
