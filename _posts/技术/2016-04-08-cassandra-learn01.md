@@ -23,7 +23,7 @@ tags:
 	- 另外就是一些文件就是用来鉴别权限设置；
 - interface：里面文件cassandra.thrift ；另外thrift是apache的一个开源的服务调用接口，（详细可以参考http://www.ibm.com/developerworks/cn/java/j-lo-apachethrift/）
 - lib：包含一些cassandra所要运行的依赖库。如：json解析相关（json-simple-1.1），另外的apache的相关开源库；
--javadoc：相关的Api说明文档
+- javadoc：相关的Api说明文档
 
 #### Windows启动服务
 
@@ -47,7 +47,7 @@ tags:
 
 配置文件统一放在了conf/cassandra.yaml下面 
 
-	cluster_name：集群名称，默认 'Test Cluster'
+	cluster_name：集群名称，默认 'Test Cluster'//使用show cluster name命令可以显示
 	listen_address：监听的IP或者主机 默认 localhost
 	commitlog_directory：commitlog的保存目录 默认保存路径$CASSANDRA_HOME/data/commitlog
 	data_file_directories：数据文件保存目录，默认$CASSANDRA_HOME/data/data
@@ -329,7 +329,7 @@ CQL的数据操作语句：Cassandra 2.2 开始，select和insert加入了JSON�
 			//添加一个节点
 			Cluster cluster = Cluster.builder().addContactPoint("localhost").build();
 			
-			
+			//取得节点的数据源
 			Metadata metadata = cluster.getMetadata();
 	
 			//输出所有的host
@@ -345,8 +345,6 @@ CQL的数据操作语句：Cassandra 2.2 开始，select和insert加入了JSON�
 			cluster.close();
 		}
 	}
-
-
 
 参考：
 
