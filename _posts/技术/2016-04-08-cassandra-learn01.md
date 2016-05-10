@@ -104,9 +104,18 @@ tags:
 
 在CQL中是忽略大小写的，如 keyspace、column、table的名称。字段名称使用双引号括起来则是大小写敏感的
 
-配置系统需要安装python，通过cmd命令 `python cqlsh` 启动 进入CQL ，help可以提供相关操作命令提示；
+配置系统需要安装python，本地通过cmd命令 `python cqlsh` 启动 进入CQL ，help可以提供相关操作命令提示；外部连接的默认密码是 cassandra/cassandra
 
 ![cassandra-shell04]({{site.baseurl}}/public/img/cassandra-shell04.png)
+
+
+1. 创建用户
+
+		CREATE USER myusername WITH PASSWORD 'mypassword' SUPERUSER ;
+	
+2. 删除用户
+	
+		DROP USER cassandra ;
 
 
 **keySpace 操作：**
@@ -345,6 +354,9 @@ CQL的数据操作语句：Cassandra 2.2 开始，select和insert加入了JSON�
 			cluster.close();
 		}
 	}
+
+
+
 
 参考：
 

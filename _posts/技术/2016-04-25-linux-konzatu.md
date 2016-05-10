@@ -58,6 +58,17 @@ tags:
 		# 修改密码，最后刷新权限就好；
 		UPDATE user SET password = PASSWORD('newpass') WHERE user = 'root';
 
+8. 设置编码格式 
+
+		vim /etc/my.cnf
+		
+		[client]
+		default-character-set=utf8
+		
+		[mysqld]
+		default-storage-engine=INNODB
+		character-set-server=utf8
+		collation-server=utf8_general_ci
 
 如果忘记root密码的处理办法：在etc/my.cnf下面加上skip-grant-tables、restart服务；
 
@@ -108,6 +119,41 @@ tags:
 		
 		zkServer.sh start
 
+7. 连接测试
+		
+		zkCli.sh -server 127.0.0.1:2181
+
+8. 查询节点的状态信息
+	
+		stat /LTS/test_cluster/NODES
+
+		# 创建的事物ID和时间
+		cZxid = 0x7
+		ctime = Fri Apr 29 10:35:20 CST 2016
+		# 更新的事物ID和时间		
+		mZxid = 0x7
+		mtime = Fri Apr 29 10:35:20 CST 2016
+		# 子节点列表ID
+		pZxid = 0x173
+		cversion = 2
+		dataVersion = 0
+		aclVersion = 0
+		# 临时节点的ID
+		ephemeralOwner = 0x0
+		# 数据长度字节大小
+		dataLength = 0
+		# 子节点数量
+		numChildren = 2
+
+	
+9. 查询节点的数据信息
+
+		get /LTS/test_cluster/NODES
+
+10. 创建节点
+
+		# 临时节点
+		create -e /node_3/node_3_1 1234
 
 ### Linux的一些常用的命令
 
