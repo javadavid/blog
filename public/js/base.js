@@ -64,12 +64,14 @@ $(document).ready(function() {
       $('#nav_btn').click();
     $('.aside3').scrollTop(0);
     contentEffects();
-
+	picWarp();
 	pajx_loadDuodsuo();
+
   });
+  
+	contentEffects();
 
-
-  contentEffects();
+	picWarp();
 });
 
 // 动态加载多说评论框的方法（pjax使用后会失效），需要回调重新绑定。
@@ -104,4 +106,16 @@ function contentEffects(){
   }else{
     $('#content_btn').hide();
   }
+}
+
+
+//包装img标签
+function picWarp(){
+	$('#content img').each(function(){
+		$(this).wrap("<a title='jj' href='"+$(this).attr('src')+"'></a>")
+		if( $(this).height()>500){
+			$(this).height(300);
+		}
+	});
+	$('#content p a').lightBox();
 }
