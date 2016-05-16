@@ -8,7 +8,7 @@ tags:
 - Linux
 ---
 
-### Linux的MySql安装；
+### Linux的MySql安装
 
 使用yum自动安装：相当于一个自动管理安装包程序，可以从指定服务器下载依赖。无需繁琐操作；
 
@@ -71,6 +71,34 @@ tags:
 		collation-server=utf8_general_ci
 
 如果忘记root密码的处理办法：在etc/my.cnf下面加上skip-grant-tables、restart服务；
+
+
+
+### Linux的Redis安装；2016/5/13 10:04:54 补充
+
+1. 不想麻烦的就是通过yum安装
+
+	yum install redis-server
+
+2. 查看安装路径
+		
+		# 配置文件路径	/etc/redis.conf：定义端口地址绑定信息和配置服务器PID
+		whereis redis
+	
+		# server路径		/usr/sbin/redis-server：路径下面有客户端redis-cli和服务端
+		whereis redis-server
+	
+3. 关于配置服务启动项目（摘自百科）
+
+	- redis-server：Redis服务器的daemon启动程序
+	- redis-cli：Redis命令行操作工具。当然，你也可以用telnet根据其纯文本协议来操作
+	- redis-benchmark：Redis性能测试工具，测试Redis在你的系统及你的配置下的读写性能
+	- redis-stat：Redis状态检测工具，可以检测Redis当前状态参数及延迟状况。
+
+4. 客户端一些相关命令
+
+	http://www.yiibai.com/redis/redis_data_types.html
+	
 
 
 ### Linux的Zookeeper安装；

@@ -47,6 +47,7 @@ $(document).ready(function() {
     nav_click(isClicked);
 
     $(this).data('clicked', !isClicked);
+  
   });
 
   $("#content_btn").on('click', function(){
@@ -59,6 +60,7 @@ $(document).ready(function() {
   });
 
   $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
+  
   $(document).on("pjax:end", function() {
     if($("body").find('.container').width() < 992)
       $('#nav_btn').click();
@@ -66,12 +68,10 @@ $(document).ready(function() {
     contentEffects();
 	picWarp();
 	pajx_loadDuodsuo();
-
   });
-  
-	contentEffects();
 
-	picWarp();
+  	picWarp();
+	contentEffects();
 });
 
 // 动态加载多说评论框的方法（pjax使用后会失效），需要回调重新绑定。
@@ -109,10 +109,10 @@ function contentEffects(){
 }
 
 
-//包装img标签
+//包装img标签 使用lightBox
 function picWarp(){
 	$('#content img').each(function(){
-		$(this).wrap("<a title='jj' href='"+$(this).attr('src')+"'></a>")
+		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>")
 		if( $(this).height()>500){
 			$(this).height(300);
 		}
