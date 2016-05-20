@@ -97,10 +97,21 @@ tags:
 
 4. 客户端一些相关命令
 
-	http://www.yiibai.com/redis/redis_data_types.html
+	<del style='color:ccc'>http://www.yiibai.com/redis/redis_data_types.html</del>
 	
+		# 配置文件读取
+		config get *
+	
+		# 字符串
+		set/get name 'zhangsan'
+	
+		# hashes set 其中user:1 为键值
+		HMSET user:1 username zhangsan password 123 point 200
+	
+		# hashes get
+		HGETALL user:1	
 
-
+	
 ### Linux的Zookeeper安装；
 
 1. 先下载文件；使用wget来下载

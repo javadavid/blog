@@ -112,10 +112,10 @@ function contentEffects(){
 //包装img标签 使用lightBox
 function picWarp(){
 	$('#content img').each(function(){
-		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>")
 		if( $(this).height()>500){
 			$(this).height(300);
 		}
+		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>")
 	});
 	$('#content p a').lightBox();
 }
