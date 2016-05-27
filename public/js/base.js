@@ -65,8 +65,8 @@ $(document).ready(function() {
     if($("body").find('.container').width() < 992)
       $('#nav_btn').click();
     $('.aside3').scrollTop(0);
-    contentEffects();
-	picWarp();
+    picWarp();
+	contentEffects();
 	pajx_loadDuodsuo();
   });
 
