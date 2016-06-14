@@ -10,7 +10,9 @@ tags:
 
 ### Linux的MySql安装
 
-使用yum自动安装：相当于一个自动管理安装包程序，可以从指定服务器下载依赖。无需繁琐操作；
+使用yum自动安装：相当于一个自动管理安装包程序，可以从指定服务器下载依赖。无需繁琐操作；第一次运行需要安装epel（yum软件源，里面包含了许多基本源里没有的软件。）
+
+	yum install epel-release
 
 1. 首先查看系统有安装mysql没
 
@@ -78,7 +80,7 @@ tags:
 
 1. 不想麻烦的就是通过yum安装
 
-	yum install redis-server
+	yum install redis
 
 2. 查看安装路径
 		
@@ -138,12 +140,12 @@ tags:
 		initLimit=10
 		# 心跳检测：就是Leader机器 向 Flolwer机器的 检测时间（5 * tickTime ）的 次数
 		syncLimit=5
-		# 快照 和 日志 目录
+		# 快照 和 日志 （若没有相应文件夹，连接zk会报拒绝连接）
 		dataDir=/var/data/zookeeper
 		dataLogDir=/var/log/zookeeper
 		# 连接ZK的服务端口
 		clientPort=2181
-		# 配置集群的主机中间的通信，第一个端口 Follower和Leader中间的通信；第二个端口是关于 Leader选举过程中投票通信？
+		# 配置集群的主机中间的通信，第一个端口 Follower和Leader中间的通信；第二个端口是关于 Leader选举过程中投票通信端口
 		server.1=192.168.147.131:2888:3888
 
 5. 在dataDir目录下面建立集群的ID标识`myid`添加`1`
@@ -221,9 +223,20 @@ tags:
 		# 生效
 		source .bash_profile
 
+
+	
+		# 或者 编辑
+		vim /etc/profile
+
+		# 添加
+		export PATH="$PATH:$HOME/opt/cassandra/bin"
+		
+		# 生效
+		source /etc/profile
+
 5. 开机服务启动的命令
 		
-		# 列出启动列表 （启动第四项是状态）
+		# 列出启动列表 （启动状态是根据 runlevel 指定；桌面 N = 5）
 		chkconfig --list
 		
 		# 设置开机启动服务
