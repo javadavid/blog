@@ -59,18 +59,17 @@ $(document).ready(function() {
 
   });
 
-  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
+  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 1000 });
   
   $(document).on("pjax:end", function() {
     if($("body").find('.container').width() < 992)
-      $('#nav_btn').click();
-    $('.aside3').scrollTop(0);
-    picWarp();
-	contentEffects();
-	pajx_loadDuodsuo();
+		$('#nav_btn').click();
+		$('.aside3').scrollTop(0);
+		picWarp();
+		contentEffects();
+		pajx_loadDuodsuo();
   });
-
-  	picWarp();
+	picWarp();
 	contentEffects();
 });
 
@@ -107,7 +106,6 @@ function contentEffects(){
     $('#content_btn').hide();
   }
 }
-
 
 //包装img标签 使用lightBox
 function picWarp(){
