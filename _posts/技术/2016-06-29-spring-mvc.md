@@ -47,13 +47,15 @@ org.springframework.web.servlet.DispatcherServlet：属性文件，读取接口�
 		}
 
 		try {
-			//存放 servlet 中的配置属性的参数 
+			//创建一个默认 存放 servlet 中的配置属性的参数 （并且判断config中的必传参数）
 			PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
-			//返回一个本类的bean的包装
+			//返回一个本类的bean的包装信息
 			BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
+			//通过ResourceLoader 注册Resource 的实现 ResourceEditor 
 			ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());
 			bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));
 			initBeanWrapper(bw);
+			//将初始化行为包装到dispatcher bean中
 			bw.setPropertyValues(pvs, true);
 		}
 		catch (BeansException ex) {
@@ -68,6 +70,7 @@ org.springframework.web.servlet.DispatcherServlet：属性文件，读取接口�
 			logger.debug("Servlet '" + getServletName() + "' configured successfully");
 		}
 	}
+
 
 initServletBean()：实现
 
@@ -99,8 +102,146 @@ initServletBean()：实现
 		}
 	}
 
+initWebApplicationContext():
 
-ContextLoaderListener：spring容器监听入口
+	protected WebApplicationContext initWebApplicationContext() {
+		//取得rootContext。也就是spring在初始化的时候的context节点	
+		WebApplicationContext rootContext =
+					WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			WebApplicationContext wac = null;
+	
+			if (this.webApplicationContext != null) {
+				// A context instance was injected at construction time -> use it
+				wac = this.webApplicationContext;
+				if (wac instanceof ConfigurableWebApplicationContext) {
+					ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
+					if (!cwac.isActive()) {
+						// The context has not yet been refreshed -> provide services such as
+						// setting the parent context, setting the application context id, etc
+						if (cwac.getParent() == null) {
+							// The context instance was injected without an explicit parent -> set
+							// the root application context (if any; may be null) as the parent
+							cwac.setParent(rootContext);
+						}
+						configureAndRefreshWebApplicationContext(cwac);
+					}
+				}
+			}
+			if (wac == null) {
+				// 查找上下文 注入一个构造，如果不存在。查找一个注册过的servletContext，如果在没有，则将其认为是parent Context，然后放入其中
+				wac = findWebApplicationContext();
+			}
+			if (wac == null) {
+				//根据root context 创建一个本地的context环境；将servlet载入其中；
+				wac = createWebApplicationContext(rootContext);
+			}
+	
+			if (!this.refreshEventReceived) {
+				// Either the context is not a ConfigurableApplicationContext with refresh
+				// support or the context injected at construction time had already been
+				// refreshed -> trigger initial onRefresh manually here.
+				onRefresh(wac);
+			}
+	
+			if (this.publishContext) {
+				// Publish the context as a servlet context attribute.
+				String attrName = getServletContextAttributeName();
+				getServletContext().setAttribute(attrName, wac);
+				if (this.logger.isDebugEnabled()) {
+					this.logger.debug("Published WebApplicationContext of servlet '" + getServletName() +
+							"' as ServletContext attribute with name [" + attrName + "]");
+				}
+			}
+	
+			return wac;
+		}
+
+
+createWebApplicationContext(rootContext)：servlet添加到 取得web的root容器 里面，配置更新操作
+
+	protected WebApplicationContext createWebApplicationContext(ApplicationContext parent) {
+		//取得context实例类型：XmlWebApplicationContext
+		Class<?> contextClass = getContextClass();
+		if (this.logger.isDebugEnabled()) {
+			this.logger.debug("Servlet with name '" + getServletName() +
+					"' will try to create custom WebApplicationContext context of class '" +
+					contextClass.getName() + "'" + ", using parent context [" + parent + "]");
+		}
+		if (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) {
+			throw new ApplicationContextException(
+					"Fatal initialization error in servlet with name '" + getServletName() +
+					"': custom WebApplicationContext class [" + contextClass.getName() +
+					"] is not of type ConfigurableWebApplicationContext");
+		}
+		//对接口反射实例化
+		ConfigurableWebApplicationContext wac =
+				(ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
+		//设置其环境；
+		wac.setEnvironment(getEnvironment());
+		//设置rootContext
+		wac.setParent(parent);
+		//context的配置
+		wac.setConfigLocation(getContextConfigLocation());
+		
+		configureAndRefreshWebApplicationContext(wac);
+
+		return wac;
+	}
+
+configureAndRefreshWebApplicationContext(was):重新载入启动context
+
+	protected void configureAndRefreshWebApplicationContext(ConfigurableWebApplicationContext wac) {
+		if (ObjectUtils.identityToString(wac).equals(wac.getId())) {
+			//给子容器设置一个ID编号；
+			if (this.contextId != null) {
+				wac.setId(this.contextId);
+			}
+			else {
+				(ConfigurableWebApplicationContext.APPLICATION_CONTEXT_ID_PREFIX +
+						ObjectUtils.getDisplayString(getServletContext().getContextPath()) + "/" + getServletName());
+			}
+		}
+		//将子容器上下文 注入到root容器；
+		wac.setServletContext(getServletContext());
+		//将配置注入到 root容器 
+		wac.setServletConfig(getServletConfig());
+		//给子容器设置一个名称；
+		wac.setNamespace(getNamespace());
+		//给webcontenxt添加一个监听，当application down掉或者关闭的时候
+		wac.addApplicationListener(new SourceFilteringListener(wac, new ContextRefreshListener()));
+
+		// 替换 servlet 初始化参数（servletContextInitParams）、确保替换属性 在运行中或者初始化之前。
+		ConfigurableEnvironment env = wac.getEnvironment();
+		if (env instanceof ConfigurableWebEnvironment) {
+			((ConfigurableWebEnvironment) env).initPropertySources(getServletContext(), getServletConfig());
+		}
+
+		postProcessWebApplicationContext(wac);
+		applyInitializers(wac);
+		wac.refresh();
+	}
+
+wac.refresh()：里面有点复杂、主要是负责初始化IOC容器的初始化；
+
+
+onRefresh(was)： 将初始载入的 static 初始化 配置文件中的接口实现
+
+	protected void initStrategies(ApplicationContext context) {
+		initMultipartResolver(context);
+		initLocaleResolver(context);
+		initThemeResolver(context);
+		initHandlerMappings(context);
+		initHandlerAdapters(context);
+		initHandlerExceptionResolvers(context);
+		initRequestToViewNameTranslator(context);
+		initViewResolvers(context);
+		initFlashMapManager(context);
+	}
+
+
+
+### spring容器
+org.springframework.web.context.ContextLoaderListener：spring容器监听入口
 
 	public class ContextLoaderListener extends ContextLoader implements ServletContextListener {
 		//根据sevlet 初始化spring容器
@@ -209,7 +350,7 @@ createWebApplicationContext()，一路点进去，determineContextClass方法 �
 
 
 
-总结：httpServlet（init） - httpSeveletBean ( initServletBean ) - FrameworkServelt ( initWebApplicationContext ) 
+总结：httpServlet（init） - httpSeveletBean ( initServletBean ) - FrameworkServelt ( initWebApplicationContext )
 
 ContextLoaderListener：对spring的配置文件载入
 
