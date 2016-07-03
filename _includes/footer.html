@@ -10,10 +10,8 @@
   </button>
 </div>
 
-<div style="position:fixed;right:15px;bottom:0px;z-index:50;opacity:0.5;filter:alpha(opacity=50);">
-	<audio controls autoplay loop >
-	  <source src="ON_YOUR_MARK.mp3" >
-	</audio>
+<div id='xiami_music_plug_in' style="position:fixed;right:15px;bottom:0px;z-index:50;opacity:0.6;filter:alpha(opacity=60);">
+	<embed src="http://www.xiami.com/widget/196756316_193966055_200_300_cccccc_dddddd_1/collectPlayer.swf" type="application/x-shockwave-flash" width="200" height="300" wmode="opaque"></embed>
 </div>
 
 <script type="text/javascript" src="{{site.baseurl}}/public/js/jquery.js"></script>
@@ -23,12 +21,18 @@
 
 <script>
 	$(function(){
-		$.Lightbox.construct({
-			show_linkback: false,
-			text: {
-				image: '照片'
-			}
+		$('#xiami_music_plug_in').mouseover(function(){
+			$(this).animate({
+				right:'15px',bottom:'0px'
+			 });
+		}).mouseleave(function(){
+			$(this).animate({
+				right:'-140px',bottom:'-245px'
+			});
+		})
 	});
+
+	
 </script>
 
 
