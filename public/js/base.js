@@ -1,4 +1,5 @@
-﻿/* 控制导航按钮动作 */
+
+/* 控制导航按钮动作 */
 function nav_click(is_show) {
   if (is_show) {
     /* 显示左侧aside */
@@ -58,19 +59,20 @@ $(document).ready(function() {
     $(this).data('clicked',!isClicked);
 
   });
-
-  $(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
-  
-  $(document).on("pjax:end", function() {
-    if($("body").find('.container').width() < 992)
-		$('#nav_btn').click();
-		$('.aside3').scrollTop(0);
-		picWarp();
-		contentEffects();
-		pajx_loadDuodsuo();
-  });
 	picWarp();
 	contentEffects();
+});
+
+$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
+  
+$(document).on("pjax:complete", function(){
+    if($("body").find('.container').width() < 992){
+		$('#nav_btn').click();
+    }
+	$('.aside3').scrollTop(0);
+	picWarp();
+	contentEffects();
+	pajx_loadDuodsuo();
 });
 
 // 动态加载多说评论框的方法（pjax使用后会失效），需要回调重新绑定。
@@ -107,13 +109,16 @@ function contentEffects(){
   }
 }
 
-//包装img标签 使用lightBox
+
+//包装img标签 使用lightBox,这里要使用当 图片加载完成后运行
 function picWarp(){
-	$('#content img').each(function(){
-		if( $(this).height()>500){
-			$(this).height(300);
-		}
-		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>")
-	});
-	$('#content p a').lightBox();
+	$('#content img').load(function(){
+		$('#content img').each(function(){
+			if( $(this).height()>500){
+				$(this).height(300);
+			}
+			$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>")
+		});
+		$('#content p a').lightBox();	
+	})
 }

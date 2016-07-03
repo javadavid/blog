@@ -20,16 +20,18 @@
 <script src="{{site.baseurl}}/public/js/jquery.lightbox-0.5.min.js"></script>
 
 <script>
-	$(function(){
-		$('#xiami_music_plug_in').mouseover(function(){
+	$(function() {
+		$('#xiami_music_plug_in').hover(function(){
 			$(this).animate({
-				right:'15px',bottom:'0px'
-			 });
-		}).mouseleave(function(){
-			$(this).animate({
-				right:'-140px',bottom:'-245px'
+				right : '15px',
+				bottom : '0px'
 			});
-		})
+		}, function() {
+			$(this).animate({
+				right : '-140px',
+				bottom : '-245px'
+			}).css("opacity",1);
+		});
 	});
 
 	
