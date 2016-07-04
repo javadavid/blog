@@ -12,7 +12,7 @@ tags:
 业界的三大java虚拟机：Oracle hotspot（后来被sun收购。名字源于：热点代码探测。最后独立用在1.4版本的JDK，后来衍生出了开源的Open JDK，也就是现在默认centos安装的jdk）、Oracle JRockit VM、IMB J9 VM。
 
 ## java运行时内存区域划分  
-![jvm-pic01]({{site.baseurl}}/public/img/jvm-pic01.png)
+![jvm-pic01][image-1]
 
 1. **程序计数器（Program Counter Register）：**
 
@@ -52,6 +52,7 @@ java的垃圾回收和c++不一样，不需要程序员自己去执行回收gc�
 4. 虚引用(Phantom Reference)：在调用回收前的finalize方法的时候，对引用记录的跟踪操作。jvm不会关注它，可以忽略不计
 
 所以当这些情况类会被回收
+
 1. 类的实例都被回收
 2. 加载该类的classLoader被回收
 3. 这个类所对应的反射类java.lang.Class没有被任何地方引用；
@@ -60,20 +61,75 @@ java的垃圾回收和c++不一样，不需要程序员自己去执行回收gc�
 前面说了新生代、旧生代、持久代是构成方法区的gc回收机制的要点。先看下方法区空间的分配模型
 ![][image-3]
 
-新生代（New Generation或者Young Generation）：新建的对象都是有新生代来分配内存，分为Eden区和Eden区和Survivor，当Eden区域不足时候会转移到Survivor区。Survivor又分为S0：FromSpace和S1:ToSpace，三者比例默认是8：1：1，可以通过-XX:SurvivorRatio启动时候的分配比例，这个在以后垃圾回收的算法有介绍。
+- 新生代（New Generation或者Young Generation）：新建的对象都是有新生代来分配内存，分为Eden区和Eden区和Survivor，当Eden区域不足时候会转移到Survivor区。Survivor又分为S0：FromSpace和S1:ToSpace，三者比例默认是8：1：1，可以通过-XX:SurvivorRatio启动时候的分配比例，新生代的内存设置：-Xmn。这个在以后垃圾回收的算法有介绍。
 
-旧生代（Old Generation）：多次回收后仍然存在的对象，比如缓存。他占用的内存大小：-Xmx 减去 -Xmn（总内存 - 新生代内存）
+- 旧生代（Old Generation）：多次回收后仍然存在的对象，比如缓存。他占用的内存大小：-Xmx 减去 -Xmn（总内存 - 新生代内存）
 
-持久代（Permanent Generation）：在sun的jvm中的命名，存放常亮和类的信息，可通过-XX:PermSize及-XX:MaxPermSize，默认是16M-64M。
-
-
+- 持久代（Permanent Generation）：在sun的jvm中的命名，存放常亮和类的信息，可通过-XX:PermSize及-XX:MaxPermSize，默认是16M-64M。
 
 
+## 关于垃圾回收的算法
+
+1. 标记-清除算法（Mark-Sweep）：对回收的对象做标记，然后进行回收操作。因为没有对其进行整理，所以在回收标记的对象会产生碎片
+2. 复制算法（Copying）：将Survivor地区分为了s0和s1两块区域，在清理需要回收的空间时候，将有用的对象复制到s1区域，（当s1不足时候，就会借助持久代的内存临时存放）然后对Eden区域和S0区域完全清理。此算法适用于**新生代**
+3. 标记-整理（或叫压缩）算法（Mark-Compact）：标记不需要回收的对象，然后移动到一块，使得内存连续，然后清除。此算法适用于**持久代**
+
+## 垃圾收集器
+![][image-4]
+
+1. 串行GC（SerialGC）:最基本的收集器，使用单线程，让运行的线程暂停几毫秒，然后进行回收操作。这种收集方式适用于单核的cpu、使用在新生代空间暂停时间和不是非常要求很高的应用上，client级别的默认的gc方式。使用-XX:+UseSerialGC来强制指定。
+
+2. 并行GC（ParNew）:和串行一样，只不过加入了多线程机制。可用在服务端（Server）上面，和CMS GC配合进行回收操作，所以将其放在服务端
+
+3. 并行回收GC（Parallel Scavenge）:在扫描和复制过程中使用采用多线程方式进行。适用于多cpu、对暂停时间要求比较小的应用上面。server级别默认采取的方式。可用-XX:+UseParallelGC来强制指定，用-XX:ParallelGCThreads=4来指定线程数
+
+4. CMS (Concurrent Mark Sweep)收集器:用来解决Serial GC响应停顿的问题，达到最短的回收时间，并发收集，低停顿的特点。他的执行分为四个阶段（从标记到清除）
+	1. 初始标记(CMS initial mark)：查找标记出能够关联上gc root的节点的对象
+	2. 并发标记(CMS concurrent mark)：根据gc root算法搜索对象是否真正存活。
+	3. 重新标记(CMS remark)：在程序运行中的并发瞬间导致会有对象标记的变动，以此来修正并发标记时间。比初始化要长，但是比并发标记要短。
+	4. 并发清除(CMS concurrent sweep)：对非标记的对象清除。
+
+5. G1收集器：相比CMS收集器有了不少的改进，标记 - 整理。所以不会产生碎片问题。有比较精准的停顿。
+
+6. Serial Old：是Serial的老年代版本、使用单线程执行收集操作。用在client模式下面的虚拟机。
+
+7. Parallel Old：是Parallel Scavenge的老年代版本，使用多线程的 标记-整理 算法
+
+8. RTSJ收集器：基于java实时编程。
+
+### 关于CMS并发
+
+优点：并发收集，减少收集停顿时间
+
+缺点：
+
+1. 在并发的阶段，会根据cpu开启相应的回收线程数量，导致占用cpu资源，降低了吞吐量。默认开启 (cpu数量+3)/4 个回收线程
+
+2. 并发清除的时候，在这里会随着程序运行，产生的垃圾只有等到下次回收，称之为“浮动垃圾”。而且在老年代的内存空间中，除了收集线程，还需要有足够的应用程序线程使用，所以不能等到Full gc再来收集，默认的是68%就会激活收集，-XX:CMSInitiatingOccupancyFraction可以修改值，降低回收次数，提高性能。若因为数据量大收集失败则会启动Serial Old来收集，时间变长了。所以性能反而下降。
+
+3. 使用标记-收集算法实现产生大量的碎片，如需要生产一个大对象，而找不到合适的空间，则不得不提前触发一次full gc。这个问题可以通过-XX:UseCMSCompactAtFullCollection对执行收集后进行整理碎片的操作，-XX:CMSFullGCBeforeCompaction设置多少次收集后，进行一次压缩操作。
+
+## 调用gc()操作
+gc方法的调用意味着按时需要在堆上面进行垃圾回收操作，在判断对象已经需要丢弃的状态下，对空间进行回收操作 System.gc() = Runtime.getRuntime().gc()；
+
+## finalize()
+只要是对栈内存空间的回收，比如某个非java对象的回收，例如调用C的free操作，用来给内存释放空间。
+
+## 内存溢出
+由于要求分配的虚拟机内存空间超出了系统所给予的空间，不能满足要求，然而系统会产生溢出
+
+## 内存泄漏
+程序对系统所分配的内存大量使用，处于一直占用的状态，所以其他的对象无法在其中创建内存区域，导致内存占用越来越多，然后产生泄露，这样一直下去，程序无法创建内存空间，也就无法运行了。
 
 
+## 参考
 
-(待更)
+本来是想将"深入理解jvm虚拟机"看一遍的，东西都比较概念，所以根据作者理解消化写的，若是参考原文比较好，坐着总结讲解的也比较全面：
+[http://blog.csdn.net/zhangerqing/article/details/8214365][1]
 
+[1]:	http://blog.csdn.net/zhangerqing/article/details/8214365
 
+[image-1]:	{{site.baseurl}}/public/img/jvm-pic01.png
 [image-2]:	http://img.my.csdn.net/uploads/201211/23/1353685206_5107.jpg
 [image-3]:	http://img.my.csdn.net/uploads/201211/24/1353728416_1655.jpg
+[image-4]:	http://img.my.csdn.net/uploads/201211/25/1353773614_1052.jpg
