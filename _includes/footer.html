@@ -21,6 +21,17 @@
 <link rel="stylesheet" href="{{site.baseurl}}/public/css/jquery.lightbox-0.5.css" type="text/css" media="screen" />
 <script>
 	$(function() {
+		//判断是 手机 还是 PC浏览器 访问
+		try{
+			if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+				$('#xiami_music_plug_in').hide();
+			}else{
+				$('#xiami_music_plug_in').show();
+			}
+		}catch(e){
+			$('#xiami_music_plug_in').hide();
+		}
+
 		$('#xiami_music_plug_in').hover(function(){
 			$(this).animate({
 				right : '15px',
