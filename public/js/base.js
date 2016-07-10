@@ -1,4 +1,3 @@
-
 /* 控制导航按钮动作 */
 function nav_click(is_show) {
   if (is_show) {
@@ -60,22 +59,23 @@ $(document).ready(function() {
 
   });
 	
-	contentEffects();
-	picWarp();
-
-	$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
   
+  
+  	picWarp();
+	contentEffects();
+	
+	
+	$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
+	  
 	$(document).on("pjax:complete", function(){
-    		if($("body").find('.container').width() < 992){
+	    if($("body").find('.container').width() < 992){
 			$('#nav_btn').click();
-    		}
+	    }
 		$('.aside3').scrollTop(0);
-		
-		contentEffects();
 		picWarp();
+		contentEffects();
 		pajx_loadDuodsuo();
 	});
-
 });
 
 
@@ -118,11 +118,9 @@ function contentEffects(){
 //包装img标签 使用lightBox,这里要使用当 图片加载完成后运行
 function picWarp(){
 	$('#content img').load(function(){
-			if( $(this).height()>500){
-				$(this).height(300);
-			}
-			$(this).wrap("<a title='"+$(this).attr('alt')+"' rel='roadtrip' class='lightbox' href='"+$(this).attr('src')+"'></a>").parent().lightBox();
-		
-	})
-	//alert( $('#content p a').length )
+		if( $(this).height()>500){
+			$(this).height(300);
+		}
+		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>");
+	}).lightBox();	
 }
