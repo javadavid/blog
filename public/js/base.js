@@ -39,7 +39,8 @@ function content_click(is_show){
   }
 }
 
-$(document).ready(function() {
+
+$('#container').load = $(document).ready(function() {
   /* 控制左侧 aside 的动作 */
   $("#nav_btn").on('click', function() {
     isClicked = $(this).data('clicked');
@@ -58,14 +59,11 @@ $(document).ready(function() {
     $(this).data('clicked',!isClicked);
 
   });
-	
-  
-  
-  	picWarp();
+
 	contentEffects();
 	
-	
-	$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
+  	picWarp();
+	$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 1000 });
 	  
 	$(document).on("pjax:complete", function(){
 	    if($("body").find('.container').width() < 992){
@@ -77,6 +75,7 @@ $(document).ready(function() {
 		pajx_loadDuodsuo();
 	});
 });
+
 
 
 
@@ -117,10 +116,10 @@ function contentEffects(){
 
 //包装img标签 使用lightBox,这里要使用当 图片加载完成后运行
 function picWarp(){
-	$('#content img').load(function(){
+	$('#content img').on("load",function(){
 		if( $(this).height()>500){
 			$(this).height(300);
 		}
-		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>");
-	}).lightBox();	
+		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>").parent().lightBox();
+	});
 }
