@@ -1,4 +1,4 @@
-/* 控制导航按钮动作 */
+﻿/* 控制导航按钮动作 */
 function nav_click(is_show) {
   if (is_show) {
     /* 显示左侧aside */
@@ -59,11 +59,11 @@ $('#container').load = $(document).ready(function() {
     $(this).data('clicked',!isClicked);
 
   });
+  	picWarp();
 
 	contentEffects();
 	
-  	picWarp();
-	$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 1000 });
+	$(document).pjax('.pjaxlink', '#pjax', { fragment: "#pjax", timeout: 10000 });
 	  
 	$(document).on("pjax:complete", function(){
 	    if($("body").find('.container').width() < 992){
@@ -123,3 +123,4 @@ function picWarp(){
 		$(this).wrap("<a title='"+$(this).attr('alt')+"' href='"+$(this).attr('src')+"'></a>").parent().lightBox();
 	});
 }
+
